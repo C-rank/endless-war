@@ -838,7 +838,10 @@ cmd_map = {
 	ewcfg.cmd_manual_unban:ewcmd.unban_manual,
 
 	# Slime Twitter
-	ewcfg.cmd_tweet: ewslimetwitter.tweet
+	ewcfg.cmd_tweet: ewslimetwitter.tweet,
+
+	# Spin
+	ewcfg.cmd_spin: ewcmd.spin
 }
 
 debug = False

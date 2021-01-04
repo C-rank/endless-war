@@ -3975,3 +3975,8 @@ async def check_flag(cmd):
 
 	return await ewutils.send_message(cmd.client, cmd.message.channel, ewutils.formatMessage(cmd.message.author, response))
 	"""
+
+async def spin(cmd):
+
+	response = "https://img.booru.org/rfck//images/8/7848b1c172b6a289276ce1d870d12a6fea1d7864.gif"
+	return await ewutils.send_message(cmd.client, cmd.message.channel, response)

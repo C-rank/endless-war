@@ -673,7 +673,9 @@ channel_neomilwaukeestate = "neo-milwaukee-state"
 channel_beachresort = "the-resort"
 channel_countryclub = "the-country-club"
 channel_rowdyroughhouse = "rowdy-roughhouse"
+channel_rowdycomms = "rowdy-comms"
 channel_copkilltown = "cop-killtown"
+channel_killercomms = "killer-comms"
 channel_slimesea = "slime-sea"
 channel_tt_pier = "toxington-pier"
 channel_jp_pier = "jaywalker-plain-pier"
@@ -920,6 +922,13 @@ hideout_by_faction = {
 	faction_rowdys: channel_rowdyroughhouse,
 	faction_killers: channel_copkilltown,
 	faction_slimecorp: channel_breakroom
+}
+
+comms_channels = [channel_rowdycomms, channel_killercomms, channel_slimecorpcomms]
+comms_by_faction = {
+	faction_rowdys: channel_rowdycomms,
+	faction_killers: channel_killercomms,
+	faction_slimecorp: channel_slimecorpcomms
 }
 
 
@@ -6344,7 +6353,10 @@ def atf_body(ctn=None):
 	if aim == 10:
 		ctn.crit = True
 		ctn.slimes_damage *= 2
-		
+
+def atf_relay(ctn=None):
+	ctn.slimes_damage *= 0.5
+
 def atf_gvs_basic(ctn=None):
 	pass
 
@@ -6712,6 +6724,28 @@ enemy_attack_type_list = [
 		str_damage = "{name_target} is caught in the blast zone of {name_enemy}'s grenades!",
 		str_groupattack = "{name_enemy} blows up a group of gaiaslimeoids with its grenades!",
 		fn_effect = atf_gvs_basic
+	),
+	EwAttackType( # Slimecorp Communications Event 1
+		id_type="cable",
+		str_crit="**THWACK!** {name_enemy} totally fucking WRECKS {name_target} with that cable-tentactle-thing! Electrifying!",
+		str_miss="**MISS!** {name_enemy} lashes the ground with its cable, leaving deep lacerations in the sidewalk as {name_target} deftly sidesteps.",
+		# str_trauma_self = "Your have deep bruising on your torso.",
+		# str_trauma = "They have deep bruising on their torso.",
+		str_kill="**BRRZZZT!** {name_enemy} lashes {name_target} with it's giant cabling! {name_target} is looking a little fried. {emote_skull}",
+		str_killdescriptor="lashed",
+		str_damage="{name_enemy} lashes {name_target}! A deadly current flows through them!",
+		fn_effect = atf_relay
+	),
+	EwAttackType( # Slimecorp Communications Event 2
+		id_type="tesla",
+		str_crit="**ZAPPPP!!** {name_enemy} fires a massive lightning blast! {name_target}'s completely fried!",
+		str_miss="**MISS!** {name_enemy} a massive electrical bolt flies towards {name_target}! They dodge just in the nick of time!",
+		# str_trauma_self = "Your have deep bruising on your torso.",
+		# str_trauma = "They have deep bruising on their torso.",
+		str_kill="{name_enemy} shocks {name_target} with an incredible amount of electricity!. Shocking! {emote_skull}",
+		str_killdescriptor="shocked",
+		str_damage="{name_enemy} shocks {name_target} with a quick blast of MAD voltage!",
+		fn_effect = atf_relay
 	),
 ]
 
@@ -12208,6 +12242,7 @@ status_modelovaccine_id = "modelovaccine"
 status_slapped_id = "slapped"
 status_foodcoma_id = "foodcoma"
 status_juviemode_id = "juviemode"
+status_zapped_id = "zapped"
 
 status_injury_head_id = "injury_head"
 status_injury_torso_id = "injury_torso"
@@ -12390,6 +12425,12 @@ status_effect_list = [
 		str_describe_self = "You're dressed to the nines in the latest Kevlar work attire.",
 		dmg_mod = -0.2
 	),
+	EwStatusEffectDef(
+		id_status= status_zapped_id,
+		time_expire = 60,
+		str_acquire = "**ZZZRT!** You're positively buzzing!",
+		str_describe_self = "A massive current flows through your body."
+	)
 ]
 
 status_effects_def_map = {}
@@ -12407,12 +12448,14 @@ stackable_status_effects = [
 	status_baked_id,
 	status_repelled_id,
 	status_repelaftereffects_id,
+	status_zapped_id,
 ]
 # Status effects that cause users/enemies to take damage.
 harmful_status_effects = [
 	status_burning_id,
 	status_acid_id,
-	status_spored_id
+	status_spored_id,
+	status_zapped_id
 ]
 
 injury_weights = {
@@ -12800,6 +12843,19 @@ trauma_list = [
 		str_trauma="They can still feel the circular scar inside their throat. Embarrassing...",
 		trauma_class=trauma_class_accuracy,
 	),
+	EwTrauma(  # 18
+		id_trauma='cables',
+		str_trauma_self="The parts of your body not covered in lacerations are marked by burns.",
+		str_trauma="The parts of their body not covered in lacerattions are marked by burns.",
+		trauma_class=trauma_class_damage,
+	),
+	EwTrauma(  # 19
+		id_trauma='tesla',
+		str_trauma_self='Branching scars cover your body, and your hair is still singed...',
+		str_trauma='Branching scars cover their body, and their hair is still singed...',
+		trauma_class=trauma_class_hunger,
+	),
+
 ]
 
 
@@ -13102,6 +13158,9 @@ enemy_attacktype_axe = 'axe'
 enemy_attacktype_hooves = 'hooves'
 enemy_attacktype_body = 'body'
 
+enemy_attacktype_cable = 'cable'
+enemy_attacktype_array = 'array'
+
 enemy_attacktype_amateur = 'amateur'
 
 enemy_attacktype_gvs_g_seeds = 'g_seeds'
@@ -13198,6 +13257,11 @@ enemy_type_sandbag = 'sandbag'
 enemy_type_doubleheadlessdoublehorseman = 'doubleheadlessdoublehorseman'
 enemy_type_doublehorse = 'doublehorse'
 
+# Slimecorp Comms Array Event enemies
+enemy_type_relay = 'slimecorprelay'
+enemy_type_grunt = "slimecorpgrunt"
+enemy_type_majorarray = 'majorarray'
+
 # Enemy ai types
 enemy_ai_sandbag = 'Sandbag'
 enemy_ai_coward = 'Coward'
@@ -13206,6 +13270,7 @@ enemy_ai_attacker_b = 'Attacker-B'
 enemy_ai_defender = 'Defender'
 enemy_ai_gaiaslimeoid = 'Gaiaslimeoid'
 enemy_ai_shambler = 'Shambler'
+enemy_ai_sc_attacker = 'Slimecorp-Attacker'
 
 # Enemy classes. For now this is only used for Gankers Vs. Shamblers
 enemy_class_normal = 'normal'
@@ -13217,6 +13282,7 @@ common_enemies = [enemy_type_sandbag, enemy_type_juvie, enemy_type_dinoslime]
 uncommon_enemies = [enemy_type_slimeadactyl, enemy_type_desertraider, enemy_type_mammoslime]
 rare_enemies = [enemy_type_microslime, enemy_type_slimeofgreed]
 raid_bosses = [enemy_type_megaslime, enemy_type_slimeasaurusrex, enemy_type_greeneyesslimedragon, enemy_type_unnervingfightingoperator]
+special_bosses = [enemy_type_majorarray, enemy_type_relay]
 
 enemy_movers = [enemy_type_megaslime, enemy_type_slimeasaurusrex, enemy_type_greeneyesslimedragon, enemy_type_unnervingfightingoperator]
 
@@ -13284,14 +13350,16 @@ raid_boss_tiers = {
 }
 
 # List of enemies that are simply too powerful to have their rare variants spawn
-overkill_enemies = [enemy_type_doubleheadlessdoublehorseman, enemy_type_doublehorse]
+overkill_enemies = [enemy_type_doubleheadlessdoublehorseman, enemy_type_doublehorse, enemy_type_majorarray]
 
 # List of enemies that have other enemies spawn with them
-enemy_group_leaders = [enemy_type_doubleheadlessdoublehorseman]
+enemy_group_leaders = [enemy_type_doubleheadlessdoublehorseman, enemy_type_majorarray, enemy_type_relay]
 
 # Dict of enemy spawn groups. The leader is the key, which correspond to which enemies to spawn, and how many.
 enemy_spawn_groups = {
-	enemy_type_doubleheadlessdoublehorseman: [[enemy_type_doublehorse, 1]]
+	enemy_type_doubleheadlessdoublehorseman: [[enemy_type_doublehorse, 1]],
+	enemy_type_majorarray: [[enemy_type_grunt, 4]],
+	enemy_type_relay: [[enemy_type_grunt, 2]],
 }
 
 # Enemy drop tables. Values are sorted by the chance to the drop an item, and then the minimum and maximum amount of times to drop that item.
@@ -13374,6 +13442,17 @@ enemy_drop_tables = {
 	enemy_type_civilian_innocent: [
 		{item_id_slimepoudrin: [20, 1, 1]},
 		{item_id_civilianscalp: [100, 1, 1]},
+	],
+	enemy_type_relay: [
+		{item_id_slimepoudrin: [100, 5, 10]},
+	],
+	enemy_type_majorarray: [
+		{item_id_slimepoudrin: [100, 20, 50]},
+	],
+	enemy_type_grunt: [
+		{rarity_plebeian: [100, 1, 1]},
+		{item_id_tradingcardpack: [5, 1, 1]},
+		{item_id_slimepoudrin: [100, 1, 1]}
 	],
 }
 for enemy in gvs_enemies:
@@ -14007,6 +14086,30 @@ enemy_type_civilian_innocent: {
 			'setdamage': 100000
 		}
 	},
+	enemy_type_relay: {
+		"slimerange": [3000000, 3000000],
+		"ai": enemy_ai_defender,
+		"attacktype": enemy_attacktype_cable,
+		"displayname": "Slimecorp Communications Relay",
+		"raredisplayname": "Armoured Slimecorp Communications Relay",
+		"aliases": ['relay', 'node', 'commrelay'],
+	},
+	enemy_type_majorarray: {
+		"slimerange": [200000000, 200000000],
+		"ai": enemy_ai_sc_attacker,
+		"attacktype": enemy_attacktype_array,
+		"displayname": "Slimecorp Major Array",
+		"raredisplayname": "Slimecorp Colonel Array",
+		"aliases": ['array', 'major', 'sma'],
+	},
+	enemy_type_grunt: {
+		"slimerange": [100000, 300000],
+		"ai": enemy_ai_sc_attacker,
+		"attacktype": enemy_attacktype_armcannon,
+		"displayname": "Underpaid Slimecorp Grunt",
+		"raredisplayname": "Elite Slimecorp Grunt",
+		"aliases": ['grunt', 'scgrunt', 'esg'],
+	}
 }
 
 # Raid boss names used to avoid raid boss reveals in ewutils.formatMessage
@@ -14015,6 +14118,15 @@ for enemy in enemy_data_table.keys():
 	if enemy in raid_bosses:
 		raid_boss_names.append(enemy_data_table[enemy]["displayname"])
 		raid_boss_names.append(enemy_data_table[enemy]["raredisplayname"])
+
+# Responses given by MAJOR ARRAY to taunt enemies
+array_responses = [
+	"**{}** booms: SURRENDER OR DIE, GANG SCUM!",
+	"**{}** booms: THIS IS SLIMECORP COMPANY PROPERTY!",
+	"**{}** booms: YOU'RE ALL GONNA DIE!",
+	"**{}** booms: BUY FUCK ENERGY! ENERGY THAT **ELECTRIFIES**!",
+	"**{}** booms: STATISTICS SHOW **SHOCKING** CORRELATION BETWEEN GANGS AND FAILURE!",
+]
 
 # Responses given by cowardly enemies when a non-ghost user is in their district.
 coward_responses = [

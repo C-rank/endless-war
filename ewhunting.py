@@ -1926,6 +1926,7 @@ async def enemy_perform_action(id_server):
 	#time_start = time.time()
 	
 	client = ewcfg.get_client()
+	server = client.get_guild(id_server)
 
 	time_now = int(time.time())
 
@@ -1953,6 +1954,7 @@ async def enemy_perform_action(id_server):
 		enemy = EwEnemy(id_enemy=row[0], id_server=id_server)
 		enemy_statuses = enemy.getStatusEffects()
 		resp_cont = ewutils.EwResponseContainer(id_server=id_server)
+		
 
 		# If an enemy is marked for death or has been alive too long, delete it
 		if enemy.life_state == ewcfg.enemy_lifestate_dead or (enemy.expiration_date < time_now):
@@ -1964,6 +1966,13 @@ async def enemy_perform_action(id_server):
 					resp_cont = enemy.move()
 					if resp_cont != None:
 						await resp_cont.post()
+
+			# Major Array taunts players 
+			if enemy.enemytype == ewcfg.enemy_type_majorarray and random.randrange(100) > 80:
+				response = random.choice(ewcfg.array_responses)
+				response = response.format(enemy.display_name)
+				channel = ewutils.get_channel(server, enemy.poi)
+				await ewutils.send_message(client, channel, response)
 
 			# If an enemy is alive and not a sandbag, make it perform the kill function.
 			if enemy.enemytype != ewcfg.enemy_type_sandbag:
@@ -2327,6 +2336,25 @@ def spawn_enemy(
 			elif enemytype == ewcfg.enemy_type_doublehorse:
 				response = "***HARK!!!***  Clopping echoes throughout the cave! The {} has arrived with {} slime, and {} levels. And on top of him rides...".format(enemy.display_name, enemy.slimes, enemy.level)
 
+			elif enemytype == ewcfg.enemy_type_relay:
+				response = "A {} suddenly springs to life! Your gang comms fizzles and cracks under the strain of whatever it's broadcasting!".format(enemy.display_name)
+				spawn_response = "Your communications channel crackles and whines under the strain of some sort of anomaly. Triangulation marks a probable location around {}."
+				cop_spawn_response = "'HEY YOU! SECURITY FORCE! WE GOT A PRIME PIECE OF TECH UP AND RUNNING, SO IF YOU'D GET YOUR ASSES DOWN TO {} TO KEEP IT IN ONE PIECE, THAT'D BE MUCH APPRECIATED! OVER AND OUT.'"
+				for channel in ewcfg.comms_channels:
+					if channel == "slimecorp-comms":
+						resp_cont.add_channel_response(channel, cop_spawn_response.format(chosen_poi.upper()))
+					else:
+						resp_cont.add_channel_response(channel, spawn_response.format(chosen_poi))
+			
+			elif enemytype == ewcfg.enemy_type_majorarray:
+				response = "{} awakens, readying it's weapons! It has {} slime and is level {}.\nHorrible static fills your ears and your IQ drops through the floor due to all these radio waves!".format(enemy.display_name, enemy.slimes, enemy.level)
+				spawn_response = "Holy fuck! The whole communications grid just lit up all at once! Get down to {}, shut that thing down, and be careful!"
+				cop_spawn_response = "'HEY! FUCKERS! THOSE GANG THUGS JUST SMASHED UP OUR RELAYS! GET DOWN TO {} AND MAKE SURE THEY DON'T KNOCK OVER THE MAJOR ARRAY!"
+				for channel in ewcfg.comms_channels:
+					if channel == "slimecorp-comms":
+						resp_cont.add_channel_response(channel, cop_spawn_response.format(chosen_poi.upper()))
+					else:
+						resp_cont.add_channel_response(channel, spawn_response.format(chosen_poi))
 			else:
 				response = "**An enemy draws near!!** It's a level {} {}, and has {} slime.".format(enemy.level, enemy.display_name, enemy.slimes)
 				if enemytype == ewcfg.enemy_type_sandbag:
@@ -2817,7 +2845,33 @@ def get_target_by_ai(enemy_data, cannibalize = False):
 				))
 			if len(users) > 0:
 				target_data = EwUser(id_user=users[0][0], id_server=enemy_data.id_server, data_level=1)
-				
+		
+		elif enemy_data.ai == ewcfg.enemy_ai_sc_attacker:
+
+			users = ewutils.execute_sql_query(
+				"SELECT {id_user}, {life_state}, {slimes}, {faction} FROM users WHERE {poi} = %s AND {id_server} = %s AND {time_lastenter} < {targettimer} AND ({level} > {safe_level} OR {life_state} != {life_state_juvenile}) AND NOT ({life_state} = {life_state_corpse} OR {life_state} = {life_state_kingpin} OR {faction} = '{slimecorp}') ORDER BY {slimes} DESC".format(
+					id_user=ewcfg.col_id_user,
+					life_state=ewcfg.col_life_state,
+					slimes=ewcfg.col_slimes,
+					poi=ewcfg.col_poi,
+					id_server=ewcfg.col_id_server,
+					time_lastenter=ewcfg.col_time_lastenter,
+					targettimer=targettimer,
+					safe_level = ewcfg.max_safe_level,
+					level = ewcfg.col_slimelevel,
+					faction = ewcfg.col_faction,
+					life_state_juvenile=ewcfg.life_state_juvenile,
+					life_state_corpse=ewcfg.life_state_corpse,
+					life_state_kingpin=ewcfg.life_state_kingpin,
+					slimecorp=ewcfg.faction_slimecorp,
+				), (
+					enemy_data.poi,
+					enemy_data.id_server
+				))
+			if len(users) > 0:
+				target_data = EwUser(id_user=users[0][0], id_server=enemy_data.id_server, data_level=1)
+
+
 		# If an enemy is a raidboss, don't let it attack until some time has passed when entering a new district.
 		if enemy_data.enemytype in ewcfg.raid_bosses and enemy_data.time_lastenter > raidbossaggrotimer:
 			target_data = None

@@ -2431,6 +2431,8 @@ async def attackEnemy(cmd, user_data, weapon, resp_cont, weapon_item, slimeoid, 
 	was_killed = False
 
 	if slimes_damage >= enemy_data.slimes - enemy_data.bleed_storage:
+		#TODO: Communications event bosses frenzy phase
+
 		was_killed = True
 		#if ewcfg.mutation_id_thickerthanblood in user_mutations:
 		#	slimes_damage = 0
@@ -2559,6 +2561,24 @@ async def attackEnemy(cmd, user_data, weapon, resp_cont, weapon_item, slimeoid, 
 		user_data.persist()
 		resp_cont.add_channel_response(cmd.message.channel.name, response)
 
+		if enemy_data.enemytype == ewcfg.enemy_type_relay:
+			defeat_response = "A horrible white noise grows in volume, almost becoming unbearable before falling silent. Your connection becomes stronger."
+			cop_defeat_response = "A horrible white noise grows in volume, almost becoming unbearable before falling silent. Your connection falters for a moment."
+			for channel in ewcfg.comms_channels:
+				if channel == "slimecorp-comms":
+					resp_cont.add_channel_response(channel, cop_defeat_response)
+				else:
+					resp_cont.add_channel_response(channel, defeat_response)
+		
+		if enemy_data.enemytype == ewcfg.enemy_type_majorarray:
+			defeat_response = "An incredibly loud tone blasts trough the radio, before falling silent. The ever-present fuzziness that had plagued the comms for the past few days clears. It appears whatever Slimecorp were doing, it's over now."
+			cop_defeat_response = "An incredibly loud tone blasts through the radio, before the whole radio falls silent. Moments pass before another tone plays, this time restoring the communications channel. \n'BACKUP COMMUNICATIONS NETWORK ONLINE.'"
+			for channel in ewcfg.comms_channels:
+				if channel == "slimecorp-comms":
+					resp_cont.add_channel_response(channel, cop_defeat_response)
+				else:
+					resp_cont.add_channel_response(channel, defeat_response)
+
 		# TODO remove after double halloween
 		#if enemy_data.enemytype == ewcfg.enemy_type_doubleheadlessdoublehorseman:
 		#	horseman_deaths = market_data.horseman_deaths
@@ -2656,8 +2676,8 @@ async def attackEnemy(cmd, user_data, weapon, resp_cont, weapon_item, slimeoid, 
 
 	district_data.persist()
 
-	# If an enemy is a raidboss, announce that kill in the killfeed
-	if was_killed and (enemy_data.enemytype in ewcfg.raid_bosses):
+	# If an enemy is a raidboss or otherwise special, announce that kill in the killfeed
+	if was_killed and ((enemy_data.enemytype in ewcfg.raid_bosses) or (enemy_data.enemytype in ewcfg.special_bosses)):
 		# announce raid boss kill in kill feed channel
 
 		resp_cont.format_channel_response(cmd.message.channel.name, cmd.message.author)

@@ -1967,6 +1967,15 @@ async def on_message(message):
 			user_data.life_state = ewcfg.life_state_shambler
 			user_data.persist()
 			await ewutils.send_message(client, message.channel, ewutils.formatMessage(message.author, response))
+
+		elif debug == True and cmd == (ewcfg.cmd_prefix + 'getslimecorp'):
+			response = "You sell out. To be more accurate, you get Slimecorp."
+			user_data = EwUser(member=message.author)
+			user_data.life_state = ewcfg.life_state_enlisted
+			user_data.faction = ewcfg.faction_slimecorp
+			user_data.time_lastenlist = time_now + ewcfg.cd_enlist
+			user_data.persist()
+			await ewutils.send_message(client, message.channel, ewutils.formatMessage(message.author, response))
 			
 		# Toggles rain on and off
 		elif debug == True and cmd == (ewcfg.cmd_prefix + 'toggledownfall'):

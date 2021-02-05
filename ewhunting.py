@@ -121,7 +121,7 @@ class EwEnemy:
 			try:
 				conn_info = ewutils.databaseConnect()
 				conn = conn_info.get('conn')
-				cursor = conn.cursor();
+				cursor = conn.cursor()
 
 				# Retrieve object
 				cursor.execute(
@@ -153,7 +153,7 @@ class EwEnemy:
 						ewcfg.col_enemy_gvs_coord,
 						query_suffix
 					))
-				result = cursor.fetchone();
+				result = cursor.fetchone()
 
 				if result != None:
 					# Record found: apply the data to this object.
@@ -466,7 +466,7 @@ class EwEnemy:
 
 			target_iskillers = target_data.life_state == ewcfg.life_state_enlisted and target_data.faction == ewcfg.faction_killers
 			target_isrowdys = target_data.life_state == ewcfg.life_state_enlisted and target_data.faction == ewcfg.faction_rowdys
-			target_isslimecorp = target_data.life_state == ewcfg.life_state_enlisted and target_data.life_state == ewcfg.faction_slimecorp
+			target_isslimecorp = target_data.life_state == ewcfg.life_state_enlisted and target_data.faction == ewcfg.faction_slimecorp
 			target_isexecutive = target_data.life_state in [ewcfg.life_state_lucky, ewcfg.life_state_executive]
 			target_isjuvie = target_data.life_state == ewcfg.life_state_juvenile
 			target_isnotdead = target_data.life_state != ewcfg.life_state_corpse
@@ -524,6 +524,13 @@ class EwEnemy:
 						strikes = ctn.strikes
 						#sap_damage = ctn.sap_damage
 						#sap_ignored = ctn.sap_ignored
+
+					# Major Array taunts players 
+					if enemy_data.enemytype == ewcfg.enemy_type_majorarray and random.randrange(100) > 80:
+						response = random.choice(ewcfg.array_responses)
+						response = response.format(enemy_data.display_name)
+						channel = ewutils.get_channel(server, ewcfg.id_to_poi[enemy_data.poi].channel)
+						await ewutils.send_message(client, channel, response)
 
 					# can't hit lucky lucy
 					if target_data.life_state == ewcfg.life_state_lucky:
@@ -1967,13 +1974,6 @@ async def enemy_perform_action(id_server):
 					if resp_cont != None:
 						await resp_cont.post()
 
-			# Major Array taunts players 
-			if enemy.enemytype == ewcfg.enemy_type_majorarray and random.randrange(100) > 80:
-				response = random.choice(ewcfg.array_responses)
-				response = response.format(enemy.display_name)
-				channel = ewutils.get_channel(server, enemy.poi)
-				await ewutils.send_message(client, channel, response)
-
 			# If an enemy is alive and not a sandbag, make it perform the kill function.
 			if enemy.enemytype != ewcfg.enemy_type_sandbag:
 				
@@ -2338,23 +2338,23 @@ def spawn_enemy(
 
 			elif enemytype == ewcfg.enemy_type_relay:
 				response = "A {} suddenly springs to life! Your gang comms fizzles and cracks under the strain of whatever it's broadcasting!".format(enemy.display_name)
-				spawn_response = "Your communications channel crackles and whines under the strain of some sort of anomaly. Triangulation marks a probable location around {}."
-				cop_spawn_response = "'HEY YOU! SECURITY FORCE! WE GOT A PRIME PIECE OF TECH UP AND RUNNING, SO IF YOU'D GET YOUR ASSES DOWN TO {} TO KEEP IT IN ONE PIECE, THAT'D BE MUCH APPRECIATED! OVER AND OUT.'"
+				comms_response = "Your communications channel crackles and whines under the strain of some sort of anomaly. Triangulation marks a probable location around {}."
+				cop_comms_response = "'HEY YOU! SECURITY FORCE! WE GOT A PRIME PIECE OF TECH UP AND RUNNING, SO IF YOU'D GET YOUR ASSES DOWN TO {} TO KEEP IT IN ONE PIECE, THAT'D BE MUCH APPRECIATED! OVER AND OUT.'"
 				for channel in ewcfg.comms_channels:
 					if channel == "slimecorp-comms":
-						resp_cont.add_channel_response(channel, cop_spawn_response.format(chosen_poi.upper()))
+						resp_cont.add_channel_response(channel, cop_comms_response.format(chosen_poi.upper()))
 					else:
-						resp_cont.add_channel_response(channel, spawn_response.format(chosen_poi))
+						resp_cont.add_channel_response(channel, comms_response.format(chosen_poi))
 			
 			elif enemytype == ewcfg.enemy_type_majorarray:
 				response = "{} awakens, readying it's weapons! It has {} slime and is level {}.\nHorrible static fills your ears and your IQ drops through the floor due to all these radio waves!".format(enemy.display_name, enemy.slimes, enemy.level)
-				spawn_response = "Holy fuck! The whole communications grid just lit up all at once! Get down to {}, shut that thing down, and be careful!"
-				cop_spawn_response = "'HEY! FUCKERS! THOSE GANG THUGS JUST SMASHED UP OUR RELAYS! GET DOWN TO {} AND MAKE SURE THEY DON'T KNOCK OVER THE MAJOR ARRAY!"
+				comms_response = "Holy fuck! The whole communications grid just lit up all at once! Get down to {}, shut that thing down, and be careful!"
+				cop_comms_response = "'HEY! FUCKERS! THOSE GANG THUGS JUST SMASHED UP OUR RELAYS! GET DOWN TO {} AND MAKE SURE THEY DON'T KNOCK OVER THE MAJOR ARRAY!"
 				for channel in ewcfg.comms_channels:
 					if channel == "slimecorp-comms":
-						resp_cont.add_channel_response(channel, cop_spawn_response.format(chosen_poi.upper()))
+						resp_cont.add_channel_response(channel, cop_comms_response.format(chosen_poi.upper()))
 					else:
-						resp_cont.add_channel_response(channel, spawn_response.format(chosen_poi))
+						resp_cont.add_channel_response(channel, comms_response.format(chosen_poi))
 			else:
 				response = "**An enemy draws near!!** It's a level {} {}, and has {} slime.".format(enemy.level, enemy.display_name, enemy.slimes)
 				if enemytype == ewcfg.enemy_type_sandbag:
@@ -3586,3 +3586,23 @@ def handle_turn_timers(enemy_data):
 	
 				enemy_data.persist()
 				return response
+
+# Handles the frenzy actions for the Slimecorp Communications Event bosses
+async def handle_frenzy(enemy_data):
+	client = ewutils.get_client()
+	channel = ewutils.get_channel(client.get_guild(enemy_data.id_server), ewcfg.id_to_poi.get(enemy_data.poi).channel)
+
+	if enemy_data.enemytype == ewcfg.enemy_type_relay:
+		enemy_data.applyStatus(ewcfg.status_protected_id, multiplier=ewcfg.relay_frenzy_duration)
+		response = "{} shifts into a defensive mode and calls for backup!"
+		for i in range(ewcfg.relay_backup_count):
+			spawn_enemy(id_server=enemy_data.id_server, pre_chosen_type=ewcfg.relay_backup_type, pre_chosen_poi=enemy_data.poi, pre_chosen_rarity=0)
+		await ewutils.send_message(client, channel, response.format(enemy_data.display_name))
+	elif enemy_data.enemytype == ewcfg.enemy_type_majorarray:
+		enemy_data.applyStatus(ewcfg.status_protected_id, multiplier=ewcfg.array_frenzy_duration)
+		response = "{} shifts into a defensive mode and calls for backup!"
+		for i in range(ewcfg.array_backup_count):
+			spawn_enemy(id_server=enemy_data.id_server, pre_chosen_type=ewcfg.array_backup_type, pre_chosen_poi=enemy_data.poi, pre_chosen_rarity=1)
+		await ewutils.send_message(client, channel, response.format(enemy_data.display_name))
+	
+	return

@@ -6354,8 +6354,16 @@ def atf_body(ctn=None):
 		ctn.crit = True
 		ctn.slimes_damage *= 2
 
-def atf_relay(ctn=None):
-	ctn.slimes_damage *= 0.5
+def atf_pistol(ctn=None):
+	ctn.slimes_damage *= 1.5
+	aim = (random.randrange(10) + 1)
+
+	if aim == 1:
+		ctn.crit = True
+		ctn.slimes_damage *= 1.5
+
+	if aim > 4:
+		ctn.miss = True  
 
 def atf_gvs_basic(ctn=None):
 	pass
@@ -6729,23 +6737,28 @@ enemy_attack_type_list = [
 		id_type="cable",
 		str_crit="**THWACK!** {name_enemy} totally fucking WRECKS {name_target} with that cable-tentactle-thing! Electrifying!",
 		str_miss="**MISS!** {name_enemy} lashes the ground with its cable, leaving deep lacerations in the sidewalk as {name_target} deftly sidesteps.",
-		# str_trauma_self = "Your have deep bruising on your torso.",
-		# str_trauma = "They have deep bruising on their torso.",
 		str_kill="**BRRZZZT!** {name_enemy} lashes {name_target} with it's giant cabling! {name_target} is looking a little fried. {emote_skull}",
 		str_killdescriptor="lashed",
 		str_damage="{name_enemy} lashes {name_target}! A deadly current flows through them!",
-		fn_effect = atf_relay
+		fn_effect = atf_talons
 	),
 	EwAttackType( # Slimecorp Communications Event 2
 		id_type="tesla",
 		str_crit="**ZAPPPP!!** {name_enemy} fires a massive lightning blast! {name_target}'s completely fried!",
 		str_miss="**MISS!** {name_enemy} a massive electrical bolt flies towards {name_target}! They dodge just in the nick of time!",
-		# str_trauma_self = "Your have deep bruising on your torso.",
-		# str_trauma = "They have deep bruising on their torso.",
 		str_kill="{name_enemy} shocks {name_target} with an incredible amount of electricity!. Shocking! {emote_skull}",
 		str_killdescriptor="shocked",
-		str_damage="{name_enemy} shocks {name_target} with a quick blast of MAD voltage!",
-		fn_effect = atf_relay
+		str_damage="{name_enemy} shocks {name_target} with a quick blast of electricity!",
+		fn_effect = atf_tusks
+	),
+	EwAttackType( # 12
+		id_type="pistol",
+		str_crit="**PEW PEW PEW!!** {name_enemy} fires their pistol randomly and luckily hits {name_target}'s weakspot!",
+		str_miss="**MISS!** {name_enemy} forgets proper trigger discipline and fires randomly! {name_target} easily sidesteps the bullets.",
+		str_kill="**PEW PEW!!** {name_enemy} fires at the ground and it ricochets into {name_target}! {name_target} should've payed more attention in geometry class! {emote_skull}",
+		str_killdescriptor="shot",
+		str_damage="{name_enemy} shoots wildly! {name_target} feels pity for them and steps in front of the bullets!",
+		fn_effect = atf_pistol
 	),
 ]
 
@@ -12242,7 +12255,7 @@ status_modelovaccine_id = "modelovaccine"
 status_slapped_id = "slapped"
 status_foodcoma_id = "foodcoma"
 status_juviemode_id = "juviemode"
-status_zapped_id = "zapped"
+status_protected_id = "protected"
 
 status_injury_head_id = "injury_head"
 status_injury_torso_id = "injury_torso"
@@ -12426,10 +12439,11 @@ status_effect_list = [
 		dmg_mod = -0.2
 	),
 	EwStatusEffectDef(
-		id_status= status_zapped_id,
+		id_status= status_protected_id,
 		time_expire = 60,
-		str_acquire = "**ZZZRT!** You're positively buzzing!",
-		str_describe_self = "A massive current flows through your body."
+		str_acquire="",
+		str_describe= "They look completely invincible!",
+		str_describe_self = "You're protected from all attacks!"
 	)
 ]
 
@@ -12448,14 +12462,12 @@ stackable_status_effects = [
 	status_baked_id,
 	status_repelled_id,
 	status_repelaftereffects_id,
-	status_zapped_id,
 ]
 # Status effects that cause users/enemies to take damage.
 harmful_status_effects = [
 	status_burning_id,
 	status_acid_id,
 	status_spored_id,
-	status_zapped_id
 ]
 
 injury_weights = {
@@ -12855,6 +12867,12 @@ trauma_list = [
 		str_trauma='Branching scars cover their body, and their hair is still singed...',
 		trauma_class=trauma_class_hunger,
 	),
+	EwTrauma(  # 20
+		id_trauma='pistol',
+		str_trauma_self='Your torso is peppered with a few scarred-over bulletholes. You can\'t help but notice the horrible aim of whoever did this',
+		str_trauma='Their torso is peppered with a few scarred-over bulletholes. You can\'t help but notice the horrible aim of whoever did this',
+		trauma_class=trauma_class_bleeding,
+	),
 
 ]
 
@@ -13157,6 +13175,7 @@ enemy_attacktype_armcannon = 'armcannon'
 enemy_attacktype_axe = 'axe'
 enemy_attacktype_hooves = 'hooves'
 enemy_attacktype_body = 'body'
+enemy_attacktype_pistol = 'pistol'
 
 enemy_attacktype_cable = 'cable'
 enemy_attacktype_array = 'array'
@@ -13352,6 +13371,9 @@ raid_boss_tiers = {
 # List of enemies that are simply too powerful to have their rare variants spawn
 overkill_enemies = [enemy_type_doubleheadlessdoublehorseman, enemy_type_doublehorse, enemy_type_majorarray]
 
+# List of enemies that take don't take bleed damage
+nobleed_enemies = [enemy_type_relay, enemy_type_majorarray]
+
 # List of enemies that have other enemies spawn with them
 enemy_group_leaders = [enemy_type_doubleheadlessdoublehorseman, enemy_type_majorarray, enemy_type_relay]
 
@@ -13457,6 +13479,16 @@ enemy_drop_tables = {
 }
 for enemy in gvs_enemies:
 	enemy_drop_tables[enemy] = [{item_id_slimepoudrin: [100, 1, 1]}]
+
+# Special values for the Slimecorp Communications Array Bosses
+relay_maxhealth = 5000000 # 5 Mega
+relay_backup_count = 2
+relay_backup_type = enemy_type_grunt
+relay_frenzy_duration = 1 # Base duration is 1 minute, so 1.5 would be 90 seconds etc.
+array_maxhealth = 100000000 # 100 Mega
+array_backup_count = 4
+array_backup_type = enemy_type_grunt
+array_frenzy_duration = 1 
 
 # When making a new enemy, make sure to fill out slimerange, ai, attacktype, displayname, raredisplayname, and aliases.
 # Enemy data tables. Slime is stored as a range from min to max possible slime upon spawning.
@@ -14087,7 +14119,7 @@ enemy_type_civilian_innocent: {
 		}
 	},
 	enemy_type_relay: {
-		"slimerange": [3000000, 3000000],
+		"slimerange": [relay_maxhealth, relay_maxhealth],
 		"ai": enemy_ai_defender,
 		"attacktype": enemy_attacktype_cable,
 		"displayname": "Slimecorp Communications Relay",
@@ -14095,7 +14127,7 @@ enemy_type_civilian_innocent: {
 		"aliases": ['relay', 'node', 'commrelay'],
 	},
 	enemy_type_majorarray: {
-		"slimerange": [200000000, 200000000],
+		"slimerange": [array_maxhealth, array_maxhealth],
 		"ai": enemy_ai_sc_attacker,
 		"attacktype": enemy_attacktype_array,
 		"displayname": "Slimecorp Major Array",
@@ -14105,7 +14137,7 @@ enemy_type_civilian_innocent: {
 	enemy_type_grunt: {
 		"slimerange": [100000, 300000],
 		"ai": enemy_ai_sc_attacker,
-		"attacktype": enemy_attacktype_armcannon,
+		"attacktype": enemy_attacktype_pistol,
 		"displayname": "Underpaid Slimecorp Grunt",
 		"raredisplayname": "Elite Slimecorp Grunt",
 		"aliases": ['grunt', 'scgrunt', 'esg'],

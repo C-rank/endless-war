@@ -2401,7 +2401,6 @@ async def attackEnemy(cmd, user_data, weapon, resp_cont, weapon_item, slimeoid, 
 		district_data = district_data
 	)
 
-			
 	# Defender enemies take less damage
 	if enemy_data.ai == ewcfg.enemy_ai_defender:
 		slimes_damage *= 0.5
@@ -2409,7 +2408,14 @@ async def attackEnemy(cmd, user_data, weapon, resp_cont, weapon_item, slimeoid, 
 	# Bicarbonate enemies take more damage
 	if enemy_data.weathertype == ewcfg.enemy_weathertype_rainresist:
 		slimes_damage *= 1.5
+
+	# Protected enemies take almost no damage
+	if ewcfg.status_protected_id in enemy_data.getStatusEffects():
+		slimes_damage = 1
 		
+		response = "The {} is too well protected! Attacks will do nothing against it!"
+		resp_cont.add_channel_response(cmd.message.channel.name, response.format(enemy_data.display_name))
+
 	# # Shamblers deal less damage to gaiaslimeoids
 	# if enemy_data.enemyclass == ewcfg.enemy_class_gaiaslimeoid and user_data.life_state == ewcfg.life_state_shambler:
 	# 	slimes_damage *= 0.25
@@ -2430,9 +2436,26 @@ async def attackEnemy(cmd, user_data, weapon, resp_cont, weapon_item, slimeoid, 
 
 	was_killed = False
 
-	if slimes_damage >= enemy_data.slimes - enemy_data.bleed_storage:
-		#TODO: Communications event bosses frenzy phase
+	slime_after_attack = enemy_data.slimes - slimes_damage
+	relay_frenzy_health = ewcfg.relay_maxhealth / 2
+	array_frenzy_health = ewcfg.array_maxhealth / 2
 
+	# Check if current slime is above the frenzy threshold, and if the incoming damage will push it over said threshold
+	if enemy_data.enemytype == ewcfg.enemy_type_relay and enemy_data.slimes > relay_frenzy_health and slime_after_attack < relay_frenzy_health:
+	
+		# Get the amount of slime we can afford to spare before we hit the threshold, and set the damage incoming to that
+		max_damage = enemy_data.slimes - relay_frenzy_health
+		slimes_damage = max_damage
+		await ewhunting.handle_frenzy(enemy_data)
+	
+	if enemy_data.enemytype == ewcfg.enemy_type_majorarray and enemy_data.slimes > array_frenzy_health and slime_after_attack < array_frenzy_health:
+
+		max_damage = enemy_data.slimes - array_frenzy_health
+		slimes_damage = max_damage
+		await ewhunting.handle_frenzy(enemy_data)
+
+	
+	if slimes_damage >= enemy_data.slimes - enemy_data.bleed_storage:
 		was_killed = True
 		#if ewcfg.mutation_id_thickerthanblood in user_mutations:
 		#	slimes_damage = 0
@@ -2448,6 +2471,8 @@ async def attackEnemy(cmd, user_data, weapon, resp_cont, weapon_item, slimeoid, 
 	slimes_tobleed = int((slimes_damage - slimes_drained) / 2)
 	#if ewcfg.mutation_id_nosferatu in user_mutations and (market_data.clock < 6 or market_data.clock >= 20):
 	#	slimes_tobleed = 0
+	if enemy_data.enemytype in ewcfg.nobleed_enemies:
+		slimes_tobleed = 0
 
 	slimes_directdamage = slimes_damage - slimes_tobleed
 	slimes_splatter = slimes_damage - slimes_tobleed - slimes_drained

@@ -29,11 +29,19 @@ def item_dropsome(id_server = None, id_user = None, item_type_filter = None, fra
 
     # Filter out Soulbound items.
     for item in items:
-        item_obj = EwItem(id_item = item.get('id_item'))
-        if item_obj.item_props.get('context') in ["corpse", "droppable"]:
-            bknd_item.give_item(id_user=user_data.poi, id_server=id_server, id_item=item_obj.id_item)
-        if item.get('soulbound') == False and not (rigor == True and item_obj.item_props.get('preserved') ==  user_data.id_user) and item_obj.item_props.get('context') != 'gellphone':
-            drop_candidates.append(item)
+        item_props = item.get('item_props')
+        # Because these are all just items, some may not have a context property
+        if 'context' in item_props:
+            item_context = item_props['context']
+        else:
+            item_context = ""
+        item_id = item.get('id_item')
+        if item_context in ["corpse", "droppable"]:
+            bknd_item.give_item(id_user=user_data.poi, id_server=id_server, id_item=item_id)
+        if item.get('soulbound') == False and item_context != 'gellphone':
+            # We have to seperate these in case 'preserved' doesn't exist
+            if not (rigor == True and ('preserved' in item_props) and item_props['preserved'] == user_data.id_user):
+                drop_candidates.append(item)
 
 
     filtered_items = []
@@ -42,9 +50,13 @@ def item_dropsome(id_server = None, id_user = None, item_type_filter = None, fra
         filtered_items = drop_candidates
     if item_type_filter == ewcfg.it_cosmetic:
         for item in drop_candidates:
-            cosmetic_id = item.get('id_item')
-            cosmetic_item = EwItem(id_item = cosmetic_id)
-            if cosmetic_item.item_props.get('adorned') != "true" and cosmetic_item.item_props.get('slimeoid') != "true":
+            item_props = item.get('item_props')
+            if 'slimeoid' in item_props:
+                item_slimeoid = item_props['slimeoid']
+            else:
+                item_slimeoid = ""
+                
+            if item_props['adorned'] != "true" and item_slimeoid != "true":
                 filtered_items.append(item)
 
     if item_type_filter == ewcfg.it_weapon:

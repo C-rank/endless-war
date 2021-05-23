@@ -344,14 +344,12 @@ def item_dedorn_cosmetics(
 	try:
 
 		bknd_core.execute_sql_query(
-			"UPDATE items_prop SET value = 'false' WHERE (name = 'adorned') AND {id_item} IN (\
-				SELECT {id_item} FROM items WHERE {id_user} = %s AND {id_server} = %s\
-			)".format(
+			"UPDATE items_prop SET value = 'false' WHERE (name = 'adorned') AND {id_item} IN (SELECT {id_item} FROM items WHERE {id_user} = %s AND {id_server} = %s)".format(
 				id_item = ewcfg.col_id_item,
 				id_user = ewcfg.col_id_user,
 				id_server = ewcfg.col_id_server
 			),(
-				id_user,
+				str(id_user),
 				id_server
 			))
 

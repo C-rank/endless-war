@@ -126,7 +126,7 @@ async def event_tick(id_server):
 	except:
 		ewutils.logMsg("Error in event tick for server {}".format(id_server))
 
-""" Decay slime totals for all users, with the exception of Kingpins"""
+""" Decay slime totals for all users, with the exception of Kingpins and Ghosts"""
 def decaySlimes(id_server = None):
 	if id_server != None:
 		try:
@@ -134,10 +134,11 @@ def decaySlimes(id_server = None):
 			conn = conn_info.get('conn')
 			cursor = conn.cursor()
 
-			cursor.execute("SELECT id_user, life_state FROM users WHERE id_server = %s AND {slimes} > 1 AND NOT {life_state} = {life_state_kingpin}".format(
+			cursor.execute("SELECT id_user, life_state FROM users WHERE id_server = %s AND {slimes} > 1 AND NOT ({life_state} = {life_state_kingpin} OR {life_state} = {life_state_corpse})".format(
 				slimes = ewcfg.col_slimes,
 				life_state = ewcfg.col_life_state,
-				life_state_kingpin = ewcfg.life_state_kingpin
+				life_state_kingpin = ewcfg.life_state_kingpin,
+				life_state_corpse = ewcfg.life_state_corpse
 			), (
 				id_server,
 			))

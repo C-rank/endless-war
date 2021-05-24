@@ -1455,7 +1455,8 @@ EwWeapon( # 38
 		fn_effect = get_normal_attack(weapon_type = 'precision'),
 		classes= [ewcfg.weapon_class_ammo],
 		stat = ewcfg.stat_huntingrifle_kills,
-		clip_size= 6,
+		clip_size = 6,
+		acquisition = ewcfg.acquisition_smelting,
 	),
 	EwWeapon( # 38
 		id_weapon = ewcfg.weapon_id_harpoon,

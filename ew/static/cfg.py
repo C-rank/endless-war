@@ -9,7 +9,7 @@ version = "v4.0069 Safari"
 
 dir_msgqueue = 'msgqueue'
 
-database = "rfck"
+database = "riot_rfck"
 
 discord_message_length_limit = 2000
 

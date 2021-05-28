@@ -94,7 +94,7 @@ class EwCmd:
 			self.tokens_count = len(tokens)
 			self.cmd = tokens[0]
 
-		#Endless War's EwId
+		#ENDLESS RIOT's EwId
 		self.client_id = EwId(client.user.id, self.guild.id, client.user.name, admin = admin) 
 		#Author's EwId
 		self.author_id = EwId(message.author.id, self.guild.id, message.author.display_name, admin = admin) 
@@ -104,7 +104,7 @@ class EwCmd:
 			self.mention_ids.append(EwId(user.id, self.guild.id, user.display_name, user.guild_permissions.administrator))
 			# print(EwId(user.id, user.guild.id, user.display_name, user.guild_permissions.administrator))
 
-		# remove mentions to us for commands that dont yet handle Endless War mentions with EwIds
+		# remove mentions to us for commands that dont yet handle ENDLESS RIOT mentions with EwIds
 		self.mentions = list(filter(lambda user : user.id != client.user.id, mentions))
 		self.mentions_count = len(self.mentions)
 
@@ -176,11 +176,11 @@ async def score(cmd):
 	else:
 		target_type = ewutils.mention_type(cmd, cmd.mention_ids[0])
 
-	# endless war slime check
+	# ENDLESS RIOT slime check
 	if target_type == "ew":
 		total = bknd_core.execute_sql_query("SELECT SUM(slimes) FROM users WHERE slimes > 0 AND id_server = '{}'".format(cmd.guild.id))
 		totalslimes = total[0][0]
-		response = "ENDLESS WAR has amassed {:,} slime.".format(totalslimes)
+		response = "ENDLESS RIOT has amassed {:,} slime.".format(totalslimes)
 
 	# self slime check
 	elif target_type == "self":
@@ -455,11 +455,11 @@ async def data(cmd):
 					if status_flavor is not None:
 						response += status_flavor.str_describe.format_map(format_status) + " "
 		else:
-			response = "ENDLESS WAR didn't understand that name."
+			response = "ENDLESS RIOT didn't understand that name."
 
 
 	elif target_type == "ew":
-		response = "ENDLESS WAR is a level 666 ancient obelisk. He is wielding THE BONE HURTING BEAM. He is a rank 111 bone hurter. He has been weathered by months of bicarbonate rain. He has millions of confirmed kills."
+		response = "ENDLESS RIOT is a level 666 ancient obelisk. He is wielding THE BONE HURTING BEAM. He is a rank 111 bone hurter. He has been weathered by months of bicarbonate rain. He has millions of confirmed kills."
 
 
 	#self data check
@@ -941,7 +941,7 @@ async def fashion(cmd):
 async def endlesswar(cmd):
 	total = bknd_core.execute_sql_query("SELECT SUM(slimes) FROM users WHERE slimes > 0 AND id_server = '{}'".format(cmd.guild.id))
 	totalslimes = total[0][0]
-	response = "ENDLESS WAR has amassed {:,} slime.".format(totalslimes)
+	response = "ENDLESS RIOT has amassed {:,} slime.".format(totalslimes)
 	return await fe_utils.send_response(response, cmd)
 
 async def swearjar(cmd):
@@ -1177,7 +1177,7 @@ async def help(cmd):
 							resp_cont.add_channel_response(cmd.message.channel, response)
 							
 			else:
-				response = 'ENDLESS WAR questions your belief in the existence of such a topic. Try referring to the topics list again by using just !help.'
+				response = 'ENDLESS RIOT questions your belief in the existence of such a topic. Try referring to the topics list again by using just !help.'
 				resp_cont.add_channel_response(cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
 	else:
 		# user not in college, check what help message would apply to the subzone they are in
@@ -1221,7 +1221,7 @@ async def help(cmd):
 			if topic in dojo_topics and topic in ewcfg.help_responses:
 				response = ewcfg.help_responses[topic]
 			else:
-				response = 'ENDLESS WAR questions your belief in the existence of such information regarding the dojo. Try referring to the topics list again by using just !help.'
+				response = 'ENDLESS RIOT questions your belief in the existence of such information regarding the dojo. Try referring to the topics list again by using just !help.'
 		elif cmd.message.channel.name in [ewcfg.channel_jr_farms, ewcfg.channel_og_farms, ewcfg.channel_ab_farms]:
 			# farming help
 			response = ewcfg.help_responses['farming']
@@ -1241,7 +1241,7 @@ async def help(cmd):
 					for mutation in mutations:
 						response += "\n**{}**: {}".format(mutation, ewcfg.mutation_descriptions[mutation])
 			else:
-				response = 'ENDLESS WAR questions your belief in the existence of such information regarding the laboratory. Try referring to the topics list again by using just !help.'
+				response = 'ENDLESS RIOT questions your belief in the existence of such information regarding the laboratory. Try referring to the topics list again by using just !help.'
 		elif cmd.message.channel.name in poi_static.transport_stops_ch:
 			# transportation help
 			response = ewcfg.help_responses['transportation']
@@ -1323,7 +1323,7 @@ async def leaderboard(cmd):
 	Link to the Gameplay category in the RFCK wiki
 """
 async def tutorial(cmd):
-	await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, 'In-depth tutorial of all the gameplay mechanics in the Endless War: https://rfck.miraheze.org/wiki/Category:Gameplay'))
+	await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, 'In-depth tutorial of all the gameplay mechanics in the ENDLESS RIOT: https://rfck.miraheze.org/wiki/Category:Gameplay'))
 
 """ Accept a russian roulette challenge """
 async def accept(cmd):
@@ -1661,14 +1661,14 @@ async def pray(cmd):
 	else:
 		target_type = ewutils.mention_type(cmd, cmd.mention_ids[0])
 
-	#endless war disapoves of praying to others and has a high chance to kill
+	#ENDLESS RIOT disapoves of praying to others and has a high chance to kill
 	if target_type != "ew":
 		probabilityofdeath = 20
 		diceroll = random.randint(1, 100)
 
 		#don't kill kingpins
 		if user_data.life_state != ewcfg.life_state_kingpin and diceroll < probabilityofdeath:
-			response = "ENDLESS WAR doesn’t respond. You squint, looking directly into his eye, and think you begin to see particle effects begin to accumulate..."
+			response = "ENDLESS RIOT doesn’t respond. You squint, looking directly into his eye, and think you begin to see particle effects begin to accumulate..."
 			await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
 			await asyncio.sleep(3)
 
@@ -1679,9 +1679,9 @@ async def pray(cmd):
 			await ewrolemgr.updateRoles(client = cmd.client, member = cmd.message.author)
 			await die_resp.post()
 
-			response = "ENDLESS WAR completely and utterly obliterates you with a bone-hurting beam."
+			response = "ENDLESS RIOT completely and utterly obliterates you with a bone-hurting beam."
 		else:
-			response = "ENDLESS WAR disapproves of this idolatry."
+			response = "ENDLESS RIOT disapproves of this idolatry."
 
 
 	else:
@@ -1754,9 +1754,9 @@ async def pray(cmd):
 			responses_list = ewcfg.pray_responses_list
 
 			if user_data.slimes > 1000000:
-				responses_list = responses_list + ["ENDLESS WAR is impressed by your vast amounts of slime."]
+				responses_list = responses_list + ["ENDLESS RIOT is impressed by your vast amounts of slime."]
 			else:
-				responses_list = responses_list + ["ENDLESS WAR can’t help but laugh at how little slime you have."]
+				responses_list = responses_list + ["ENDLESS RIOT can’t help but laugh at how little slime you have."]
 
 			response = random.choice(responses_list)
 		else:
@@ -1785,10 +1785,10 @@ async def pray(cmd):
 					item_props = item_props
 				)
 
-				response = "ENDLESS WAR takes pity on you, and with a minor tremor he materializes a {} in your pocket.".format(item.str_name)
+				response = "ENDLESS RIOT takes pity on you, and with a minor tremor he materializes a {} in your pocket.".format(item.str_name)
 
 			elif diceroll < (probabilityofpoudrin + probabilityofdeath): # Player gets a face full of bone-hurting beam.
-				response = "ENDLESS WAR doesn’t respond. You squint, looking directly into his eye, and think you begin to see particle effects begin to accumulate..."
+				response = "ENDLESS RIOT doesn’t respond. You squint, looking directly into his eye, and think you begin to see particle effects begin to accumulate..."
 				await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
 				await asyncio.sleep(3)
 
@@ -1799,15 +1799,15 @@ async def pray(cmd):
 				await ewrolemgr.updateRoles(client = cmd.client, member = cmd.message.author)
 				await die_resp.post()
 
-				response = "ENDLESS WAR completely and utterly obliterates you with a bone-hurting beam."
+				response = "ENDLESS RIOT completely and utterly obliterates you with a bone-hurting beam."
 
 			else:
 				responses_list = ewcfg.pray_responses_list
 
 				if user_data.slimes > 1000000:
-					responses_list = responses_list + ["ENDLESS WAR is impressed by your vast amounts of slime."]
+					responses_list = responses_list + ["ENDLESS RIOT is impressed by your vast amounts of slime."]
 				else:
-					responses_list = responses_list + ["ENDLESS WAR can’t help but laugh at how little slime you have."]
+					responses_list = responses_list + ["ENDLESS RIOT can’t help but laugh at how little slime you have."]
 
 				response = random.choice(responses_list)
 
@@ -1903,7 +1903,7 @@ async def store_item(cmd):
 	if poi.community_chest != None:
 		return await ewfaction.store(cmd)
 	elif poi.is_apartment:
-		response = "Try that in a DM to ENDLESS WAR."
+		response = "Try that in a DM to ENDLESS RIOT."
 	else:
 		response = "There is no storage here, public or private."
 	await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
@@ -1915,7 +1915,7 @@ async def remove_item(cmd):
 	if poi.community_chest != None:
 		return await ewfaction.take(cmd)
 	elif poi.is_apartment:
-		response = "Try that in a DM to ENDLESS WAR."
+		response = "Try that in a DM to ENDLESS RIOT."
 	else:
 		response = "There is no storage here, public or private."
 	await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
@@ -1988,7 +1988,7 @@ async def push(cmd):
 
 	#elif time_now > targetmodel.time_expirpvp:
 		# Target is not flagged for PvP.
-	#	response = "{} is not mired in the ENDLESS WAR right now.".format(target.display_name)
+	#	response = "{} is not mired in the ENDLESS RIOT right now.".format(target.display_name)
 
 	elif (ewcfg.mutation_id_bigbones in target_mutations or ewcfg.mutation_id_fatchance in target_mutations) and (ewcfg.mutation_id_lightasafeather not in target_mutations and ewcfg.mutation_id_airlock not in target_mutations):
 		response = "You try to push {}, but they're way too heavy. It's always fat people, constantly trying to prevent your murderous schemes.".format(target.display_name)
@@ -3087,7 +3087,7 @@ async def almanac(cmd):
 		if enemytype in ewcfg.gvs_almanac:
 			response = ewcfg.gvs_almanac[enemytype]
 		else:
-			response = 'ENDLESS WAR questions your belief in the existence of such a shambler or gaiaslimeoid. Try referring to the ones in the list again by using just !almanac.'
+			response = 'ENDLESS RIOT questions your belief in the existence of such a shambler or gaiaslimeoid. Try referring to the ones in the list again by using just !almanac.'
 
 
 	return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
@@ -3858,7 +3858,7 @@ async def gvs_searchforbrainz(cmd):
 	try:
 		await fe_utils.send_message(cmd.client, cmd.message.author, response)
 	except fe_utils.discord.errors.Forbidden:
-		response = "You have to allow ENDLESS WAR to DM you to search for brainz!"
+		response = "You have to allow ENDLESS RIOT to DM you to search for brainz!"
 		return await fe_utils.send_message(cmd.client, cmd.message.channel, response)
 
 	user_data = EwUser(member=cmd.message.author)
@@ -4298,11 +4298,11 @@ def item_commands(cmd):
 	async def fake_failed_command(cmd):
 		client = ewutils.get_client()
 		randint = random.randint(1, 3)
-		msg_mistake = "ENDLESS WAR is growing frustrated."
+		msg_mistake = "ENDLESS RIOT is growing frustrated."
 		if randint == 2:
-			msg_mistake = "ENDLESS WAR denies you his favor."
+			msg_mistake = "ENDLESS RIOT denies you his favor."
 		elif randint == 3:
-			msg_mistake = "ENDLESS WAR pays you no mind."
+			msg_mistake = "ENDLESS RIOT pays you no mind."
 
 		msg = await fe_utils.send_message(client, cmd.message.channel, msg_mistake)
 		await asyncio.sleep(2)
@@ -4363,11 +4363,11 @@ async def make_bp(cmd):
 async def fake_failed_command(cmd):
 	client = ewutils.get_client()
 	randint = random.randint(1, 3)
-	msg_mistake = "ENDLESS WAR is growing frustrated."
+	msg_mistake = "ENDLESS RIOT is growing frustrated."
 	if randint == 2:
-		msg_mistake = "ENDLESS WAR denies you his favor."
+		msg_mistake = "ENDLESS RIOT denies you his favor."
 	elif randint == 3:
-		msg_mistake = "ENDLESS WAR pays you no mind."
+		msg_mistake = "ENDLESS RIOT pays you no mind."
 
 	msg = await fe_utils.send_message(client, cmd.message.channel, msg_mistake)
 	await asyncio.sleep(2)
@@ -4401,4 +4401,31 @@ async def post_leaderboard(cmd):
 	await bknd_leaderboard.post_leaderboards(client=client, server=server)
 	return await fe_utils.send_message(cmd.client, cmd.message.channel, "Yee-haw! Just refreshed that their leaderboard for ya sonny!")
 
+async def riot(cmd):
+	possible_texts = [
+		"**HRNNNNNNGGGHHHHHH!!!!!**",
+		"**FUCK**! **YEAH!**",
+		"**FUCKING BULLSHIT, MAN!!!!!**",
+		"**Riot.**",
+		"**RIOTTTTTTTT!!!!!!!!!!!!!**",
+		"**POG!!!!! I AM POGGGGINNGGGGG!!!!**",
+		"**AJNDAWDNAKJWDNJAWNDJANWJDKNAWDNAKWDNAWNJDLANWD!!!!**"
+	]
+	riot_text = possible_texts[random.randint(0, len(possible_texts))]
+	return await fe_utils.send_response(riot_text, cmd)
 
+async def add(cmd):
+	addition = ewutils.flattenTokenListToString(tokens = cmd.tokens[1:])
+	if cmd.tokens_count >= 1:
+		add_text = "Understood. Adding {}.".format(addition)
+	else:
+		add_text = "Add what???"
+	return await fe_utils.send_response(add_text, cmd)
+
+async def remove(cmd):
+	removal = ewutils.flattenTokenListToString(tokens = cmd.tokens[1:])
+	if cmd.tokens_count >= 1:
+		remove_text = "Finally! Removing {}.".format(removal)
+	else:
+		remove_text = "Remove what???"
+	return await fe_utils.send_response(remove_text, cmd)

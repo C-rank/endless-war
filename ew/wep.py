@@ -206,7 +206,7 @@ def canAttack(cmd, amb_switch = 0):
 
 		else:
 			# no enemy is found within that district
-			response = "Your bloodlust is appreciated, but ENDLESS WAR couldn't find what you were trying to kill."
+			response = "Your bloodlust is appreciated, but ENDLESS RIOT couldn't find what you were trying to kill."
 
 	elif cmd.mentions_count == 1:
 		# Get target's info.
@@ -233,7 +233,7 @@ def canAttack(cmd, amb_switch = 0):
 			response = "You can't reach them from where you are."
 
 		elif ewmap.poi_is_pvp(shootee_data.poi) == False:
-			response = "{} is not mired in the ENDLESS WAR right now.".format(member.display_name)
+			response = "{} is not mired in the ENDLESS RIOT right now.".format(member.display_name)
 
 		elif user_isshambler == True and len(district_data.get_enemies_in_district(classes = [ewcfg.enemy_class_gaiaslimeoid])) > 0:
 			response = "You can't attack them, they're protected by Gaiaslimeoids!"
@@ -270,7 +270,7 @@ def canAttack(cmd, amb_switch = 0):
 
 		elif not poi.pvp and not (shootee_data.life_state == ewcfg.life_state_shambler or shootee_data.get_inhabitee() == user_data.id_user or user_isshambler): #or (shootee_data.life_state == ewcfg.life_state_juvenile and shootee_data.slimelevel <= ewcfg.max_safe_level):
 			# Target is neither flagged for PvP, nor a shambler, nor a ghost inhabiting the player, nor a juvie above a certain threshold slime. Player is not a shambler.
-			response = "{} is not mired in the ENDLESS WAR right now.".format(member.display_name)
+			response = "{} is not mired in the ENDLESS RIOT right now.".format(member.display_name)
 
 		# Identify if the shooter and the shootee are on the same team.
 		#same_faction = False
@@ -889,7 +889,7 @@ async def attack(cmd, n1_die = None):
 						)
 					elif ewcfg.status_modelovaccine_id in user_data.getStatusEffects():
 						shootee_data.degradation = 0
-						shambler_resp = "Your purified slime seeps into and emulsifies in their mangled corpse, healing their degraded body. When they revive, they’ll be a normal slimeboi like the rest of us. A pure, homogenous race of ENDLESS WAR fearing juveniles. It brings a tear to your eye."
+						shambler_resp = "Your purified slime seeps into and emulsifies in their mangled corpse, healing their degraded body. When they revive, they’ll be a normal slimeboi like the rest of us. A pure, homogenous race of ENDLESS RIOT fearing juveniles. It brings a tear to your eye."
 
 					# release bleed storage
 					#if ewcfg.mutation_id_thickerthanblood in user_mutations:
@@ -1636,7 +1636,7 @@ async def spar(cmd):
 						#otherwise unkillable
 						response = '{} cannot spar now.'.format(member.display_name)
 	else:
-		response = 'Your fighting spirit is appreciated, but ENDLESS WAR didn\'t understand that name.'
+		response = 'Your fighting spirit is appreciated, but ENDLESS RIOT didn\'t understand that name.'
 
 	# Send the response to the player.
 	await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
@@ -1792,7 +1792,7 @@ async def marry(cmd):
 		))
 		await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(
 			cmd.message.author,
-			"You express your desire to get things done as soon as possible so that you can stop reading this boring wall of text and return to your busy agenda of murder, and so he prepares to officiate immediately. You stand next to your darling {}, the only object of your affection in this godforsaken city. You shiver with anticipation for the most anticipated in-game event of your ENDLESS WAR career. A crowd of enemy and allied gangsters alike forms around you three as the Dojo Master begins the ceremony...".format(weapon_name)
+			"You express your desire to get things done as soon as possible so that you can stop reading this boring wall of text and return to your busy agenda of murder, and so he prepares to officiate immediately. You stand next to your darling {}, the only object of your affection in this godforsaken city. You shiver with anticipation for the most anticipated in-game event of your ENDLESS RIOT career. A crowd of enemy and allied gangsters alike forms around you three as the Dojo Master begins the ceremony...".format(weapon_name)
 		))
 		await asyncio.sleep(3)
 		await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(
@@ -2491,7 +2491,7 @@ async def dodge(cmd):
 		target_data = target = cmbt_utils.find_enemy(enemy_search=huntedenemy, user_data=user_data)
 
 	if target_data == None:
-		response = "ENDLESS WAR didn't understand that name."
+		response = "ENDLESS RIOT didn't understand that name."
 		return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
 	else:
 		try:
@@ -2544,7 +2544,7 @@ async def taunt(cmd):
 		target_data = target = cmbt_utils.find_enemy(enemy_search=huntedenemy, user_data=user_data)
 
 	if target_data == None:
-		response = "ENDLESS WAR didn't understand that name."
+		response = "ENDLESS RIOT didn't understand that name."
 		return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
 	else:
 		try:
@@ -2601,7 +2601,7 @@ async def aim(cmd):
 		target_data = target = cmbt_utils.find_enemy(enemy_search=huntedenemy, user_data=user_data)
 
 	if target_data == None:
-		response = "ENDLESS WAR didn't understand that name."
+		response = "ENDLESS RIOT didn't understand that name."
 		return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
 	else:
 		try:

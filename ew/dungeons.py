@@ -111,11 +111,11 @@ async def tutorial_cmd(cmd):
 		""" couldn't process the command. bail out!! """
 		""" bot rule 0: be cute """
 		randint = random.randint(1,3)
-		msg_mistake = "ENDLESS WAR is growing frustrated."
+		msg_mistake = "ENDLESS RIOT is growing frustrated."
 		if randint == 2:
-			msg_mistake = "ENDLESS WAR denies you his favor."
+			msg_mistake = "ENDLESS RIOT denies you his favor."
 		elif randint == 3:
-			msg_mistake = "ENDLESS WAR pays you no mind."
+			msg_mistake = "ENDLESS RIOT pays you no mind."
 
 		msg = await fe_utils.send_message(client, cmd.message.channel, msg_mistake)
 		await asyncio.sleep(2)

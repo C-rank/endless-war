@@ -515,7 +515,7 @@ async def read_book(cmd = None, dm = False):
 
 
 	if not dm:
-		response = "ENDLESS WAR politely asks that you !read in his DMs."
+		response = "ENDLESS RIOT politely asks that you !read in his DMs."
 
 	elif len(cmd.tokens) < 2:
 		response = "What zine do you want to read?"
@@ -542,7 +542,7 @@ async def read_book(cmd = None, dm = False):
 			if book.genre == 3:
 
 				accepted = False
-				response = "ENDLESS WAR sees you about to open up a porn zine and wants to make sure you're 18 years or older. Use **!accept** to open or **!refuse** to abstain."
+				response = "ENDLESS RIOT sees you about to open up a porn zine and wants to make sure you're 18 years or older. Use **!accept** to open or **!refuse** to abstain."
 
 				await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
 
@@ -600,7 +600,7 @@ async def next_page(cmd = None, dm = False):
 
 
 	if not dm:
-		response = "ENDLESS WAR politely asks that you !read in his DMs."
+		response = "ENDLESS RIOT politely asks that you !read in his DMs."
 
 	elif user_data.id_user in readers.keys():
 		id_book = readers[user_data.id_user][0]
@@ -644,7 +644,7 @@ async def previous_page(cmd = None, dm = False):
 
 
 	if not dm:
-		response = "ENDLESS WAR politely asks that you !read in his DMs."
+		response = "ENDLESS RIOT politely asks that you !read in his DMs."
 
 	elif user_data.id_user in readers.keys():
 		id_book = readers[user_data.id_user][0]

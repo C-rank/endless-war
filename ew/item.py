@@ -200,7 +200,7 @@ async def inventory_print(cmd):
         if can_message_user:
             msg_handle = await fe_utils.send_message(cmd.client, cmd.message.author, response)
     except discord.errors.Forbidden:
-        response = "You'll have to allow Endless War to send you DMs to check your inventory!"
+        response = "You'll have to allow ENDLESS RIOT to send you DMs to check your inventory!"
         return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
     except:
         can_message_user = False

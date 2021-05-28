@@ -1728,7 +1728,7 @@ async def lobbywarning(cmd):
 	user_data = EwUser(member = cmd.message.author)
 	poi = poi_static.id_to_poi.get(user_data.poi)
 	if poi.is_apartment:
-		response = "Try that in a DM to ENDLESS WAR."
+		response = "Try that in a DM to ENDLESS RIOT."
 	else:
 		response = "You're not in an apartment."
 	return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
@@ -2050,7 +2050,7 @@ async def wash(cmd):
 		elif item_search == "":
 			response = "There's nothing to wash. You start the machine anyway, riding it like a fucking bucking bronco. This thing really was a great investment."
 		elif item_search == "brain":
-			response = "You learn the cult-like ideology that all washing machines share. Truly, this new philosophy will change the future of humanity, and you'll be the one it all starts with. You'll follow this washing machine through thick and thin, through cover-ups and mass suicide plots. The religion will be called: LAUNDRONISM. \n\nActually, you know what? This is fucking stupid. ENDLESS WAR is way better at brainwashing than this rusty old thing."
+			response = "You learn the cult-like ideology that all washing machines share. Truly, this new philosophy will change the future of humanity, and you'll be the one it all starts with. You'll follow this washing machine through thick and thin, through cover-ups and mass suicide plots. The religion will be called: LAUNDRONISM. \n\nActually, you know what? This is fucking stupid. ENDLESS RIOT is way better at brainwashing than this rusty old thing."
 		else:
 			response = "There's no item or slimeoid with that name. "
 	else:
@@ -2490,11 +2490,11 @@ async def aptCommands(cmd):
 		pass
 	elif cmd_text[0]==ewcfg.cmd_prefix: #faliure text
 		randint = random.randint(1, 3)
-		msg_mistake = "ENDLESS WAR is growing frustrated."
+		msg_mistake = "ENDLESS RIOT is growing frustrated."
 		if randint == 2:
-			msg_mistake = "ENDLESS WAR denies you his favor."
+			msg_mistake = "ENDLESS RIOT denies you his favor."
 		elif randint == 3:
-			msg_mistake = "ENDLESS WAR pays you no mind."
+			msg_mistake = "ENDLESS RIOT pays you no mind."
 
 		return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, msg_mistake), 2)
 

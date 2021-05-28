@@ -1683,7 +1683,7 @@
     "firefightershelmet": {
         "id_cosmetic": "firefightershelmet",
         "str_name": "Firefighter's Helmet",
-        "str_desc": "A old NLACakaNM wide brimmed red firefighter's helmet. No one knows what happened to the firefighters of Endless War.",
+        "str_desc": "A old NLACakaNM wide brimmed red firefighter's helmet. No one knows what happened to the firefighters of ENDLESS RIOT.",
         "str_onadorn": "",
         "str_unadorn": "",
         "str_onbreak": "",
@@ -1740,7 +1740,7 @@
     "vrheadset": {
         "id_cosmetic": "vrheadset",
         "str_name": "VR Headset",
-        "str_desc": "Endless War -- now in stunning VR!",
+        "str_desc": "ENDLESS RIOT -- now in stunning VR!",
         "str_onadorn": "",
         "str_unadorn": "",
         "str_onbreak": "",

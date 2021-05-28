@@ -962,7 +962,7 @@ dungeon_tutorial = [
 				"has been torn open in it, through which you quickly make your escape.\n\nYou take a " \
 				"moment to survey the scene before you. Downtown NLACakaNM bustles and hums with activity " \
 				"and you hear the familiar clicking of the Geiger Counters on every street corner. Over " \
-				"the skyline you see it... the towering green obelisk, ENDLESS WAR. Taker of Life, " \
+				"the skyline you see it... the towering green obelisk, ENDLESS RIOT. Taker of Life, " \
 				"Bringer of Slime. Your heart swells with pride and your eyes flood with tears at the " \
 				"sight of His glory.\n\nBehind you, SLIMECORP™ helicopters circle overhead. You know " \
 				"what that means. Things are about to get hot. Time to skedaddle.\n\nYou leave the " \

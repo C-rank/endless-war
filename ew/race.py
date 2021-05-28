@@ -33,35 +33,35 @@ async def set_race(cmd):
 			desired_race = cmd.tokens[1]
 			if desired_race in ewcfg.races.values() or desired_race in forbidden_races:
 				if desired_race == ewcfg.races["humanoid"]:
-					response = "ENDLESS WAR acknowledges you as a boring humanoid. Your lame and uninspired figure allows you to do nothing but **{}**.".format(ewcfg.cmd_exist)
+					response = "ENDLESS RIOT acknowledges you as a boring humanoid. Your lame and uninspired figure allows you to do nothing but **{}**.".format(ewcfg.cmd_exist)
 				elif desired_race == ewcfg.races["amphibian"]:
-					response = "ENDLESS WAR acknowledges you as some denomination of amphibian. You may now **{}** to let the world hear your fury.".format(ewcfg.cmd_ree)
+					response = "ENDLESS RIOT acknowledges you as some denomination of amphibian. You may now **{}** to let the world hear your fury.".format(ewcfg.cmd_ree)
 				elif desired_race == ewcfg.races["food"]:
-					response = "ENDLESS WAR acknowledges you as a member of the food race. If you must, you may now give in to your deepest desires, and **{}**.".format(ewcfg.cmd_autocannibalize)
+					response = "ENDLESS RIOT acknowledges you as a member of the food race. If you must, you may now give in to your deepest desires, and **{}**.".format(ewcfg.cmd_autocannibalize)
 				elif desired_race == ewcfg.races["skeleton"]:
-					response = "ENDLESS WAR acknowledges you as a being of bone. You may now **{}** to intimidate your enemies or soothe yourself.".format(ewcfg.cmd_rattle)
+					response = "ENDLESS RIOT acknowledges you as a being of bone. You may now **{}** to intimidate your enemies or soothe yourself.".format(ewcfg.cmd_rattle)
 				elif desired_race == ewcfg.races["robot"]:
 					response = '\n```python\nplayer_data.race = "robot"	#todo: change to an ID\nplayer_data.unlock_command("{}")```'.format(ewcfg.cmd_beep)
 				elif desired_race == ewcfg.races["furry"]:
-					response = "ENDLESS WAR reluctantly acknowledges you as a furry. Yes, you can **{}** now, but please do it in private.".format(ewcfg.cmd_yiff)
+					response = "ENDLESS RIOT reluctantly acknowledges you as a furry. Yes, you can **{}** now, but please do it in private.".format(ewcfg.cmd_yiff)
 				elif desired_race == ewcfg.races["scalie"]:
-					response = "ENDLESS WAR acknowledges you as a scalie. You may now **{}** at your enemies as a threat.".format(ewcfg.cmd_hiss)
+					response = "ENDLESS RIOT acknowledges you as a scalie. You may now **{}** at your enemies as a threat.".format(ewcfg.cmd_hiss)
 				elif desired_race == ewcfg.races["slime-derived"]:
-					response = "ENDLESS WAR acknowledges you as some sort of slime-derived lifeform. **{}** to your heart's content, you goopy bastard.".format(ewcfg.cmd_jiggle)
+					response = "ENDLESS RIOT acknowledges you as some sort of slime-derived lifeform. **{}** to your heart's content, you goopy bastard.".format(ewcfg.cmd_jiggle)
 				elif desired_race == ewcfg.races["monster"]:
-					response = 'ENDLESS WAR acknowledges you as a monstrosity. Go on a **{}**, you absolute beast.'.format(ewcfg.cmd_rampage)
+					response = 'ENDLESS RIOT acknowledges you as a monstrosity. Go on a **{}**, you absolute beast.'.format(ewcfg.cmd_rampage)
 				elif desired_race == ewcfg.races["critter"]:
-					response = "ENDLESS WAR acknowledges you as a little critter. You may **{}**s from others now. Adorable.".format(ewcfg.cmd_request_petting)
+					response = "ENDLESS RIOT acknowledges you as a little critter. You may **{}**s from others now. Adorable.".format(ewcfg.cmd_request_petting)
 				elif desired_race == ewcfg.races["avian"]:
-					response = "ENDLESS WAR acknowledges you as some kind of bird creature. You can now **{}** to fly away for a quick escape.".format(ewcfg.cmd_flutter)
+					response = "ENDLESS RIOT acknowledges you as some kind of bird creature. You can now **{}** to fly away for a quick escape.".format(ewcfg.cmd_flutter)
 				elif desired_race == ewcfg.races["other"]:
-					response = 'ENDLESS WAR struggles to categorize you, and files you under "other". Your peculiar form can be used to **{}** those around you.'.format(ewcfg.cmd_confuse)
+					response = 'ENDLESS RIOT struggles to categorize you, and files you under "other". Your peculiar form can be used to **{}** those around you.'.format(ewcfg.cmd_confuse)
 				elif desired_race == ewcfg.races["insectoid"]:
-					response = 'ENDLESS WAR acknowledges you as an insectoid lifeform. You may now **{}** alongside other creepy-crawlies of your ilk.'.format(ewcfg.cmd_entomize)
+					response = 'ENDLESS RIOT acknowledges you as an insectoid lifeform. You may now **{}** alongside other creepy-crawlies of your ilk.'.format(ewcfg.cmd_entomize)
 				elif desired_race == ewcfg.races["shambler"]:
-					response = 'ENDLESS WAR acknowledges you as one of the dead, is disturbed by your presence. You may now **{}** in the hordes of those like you'.format(ewcfg.cmd_shamble)
+					response = 'ENDLESS RIOT acknowledges you as one of the dead, is disturbed by your presence. You may now **{}** in the hordes of those like you'.format(ewcfg.cmd_shamble)
 				elif desired_race in forbidden_races:
-					response = 'In its infinite wisdom, ENDLESS WAR sees past your attempt at being funny and acknowledges you for what you _truly_ are: **a fucking idiot**.'
+					response = 'In its infinite wisdom, ENDLESS RIOT sees past your attempt at being funny and acknowledges you for what you _truly_ are: **a fucking idiot**.'
 
 				# only set the cooldown if the user is switching race, rather than setting it up for the first time
 				if user_data.race: 
@@ -421,7 +421,7 @@ async def confuse(cmd):
 	if user_data.race == ewcfg.races["other"]:
 		if cmd.mentions_count == 0:
 			if random.randrange(20) == 0:
-				response = "ENDLESS WAR takes a cursory glance at you. It still doesn't know what the fuck you are."
+				response = "ENDLESS RIOT takes a cursory glance at you. It still doesn't know what the fuck you are."
 			else:
 				response = "You confuse yourself. What?"
 		if cmd.mentions_count > 1:

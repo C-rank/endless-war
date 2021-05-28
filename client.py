@@ -105,6 +105,11 @@ channels_slimetwitter = {}
 
 # Map of all command words in the game to their implementing function.
 cmd_map = {
+	# RIOT
+	ewcfg.cmd_riot: ewcmd.riot,
+	ewcfg.cmd_add: ewcmd.add,
+	ewcfg.cmd_remove: ewcmd.remove,
+
 	# Attack another player
 	ewcfg.cmd_kill: ewwep.attack,
 	ewcfg.cmd_shoot: ewwep.attack,
@@ -804,7 +809,7 @@ cmd_map = {
 	ewcfg.cmd_completetrade: ewmarket.complete_trade,
 	ewcfg.cmd_canceltrade: ewmarket.cancel_trade,
 
-	# Praying at the base of ENDLESS WAR.
+	# Praying at the base of ENDLESS RIOT.
 	ewcfg.cmd_pray: ewcmd.pray,
 
 	# Gankers Vs. Shamblers gang swapping
@@ -1517,7 +1522,7 @@ async def on_message(message):
 			await ewrolemgr.updateRoles(client=client, member=message.author)
 			await die_resp.post()
 
-			response = "ENDLESS WAR completely and utterly obliterates {} with a bone-hurting beam.".format(message.author.display_name).replace("@", "\{at\}")
+			response = "ENDLESS RIOT completely and utterly obliterates {} with a bone-hurting beam.".format(message.author.display_name).replace("@", "\{at\}")
 			return await fe_utils.send_message(client, message.channel, response)
 		if str(message.channel) in ["nurses-office", "suggestion-box", "detention-center", "community-service", "playground", "graffiti-wall", "post-slime-drip", "outside-the-lunchroom", "outside-the-lunchrooom"]:
 			if ewcfg.status_hogtied_id in statuses:
@@ -1672,7 +1677,7 @@ async def on_message(message):
 					time_last = last_helped_times.get(message.author.id, 0)
 					if (time_now - time_last) > 30:
 						last_helped_times[message.author.id] = time_now
-						direct_help_response = "ENDLESS WAR doesn't allow you to do that command in DMs.\nIf you're confused about what you're doing, you might want to get some **!help** over at the server."
+						direct_help_response = "ENDLESS RIOT doesn't allow you to do that command in DMs.\nIf you're confused about what you're doing, you might want to get some **!help** over at the server."
 						await fe_utils.send_message(client, message.channel, direct_help_response)
 				else:
 					return
@@ -1694,7 +1699,7 @@ async def on_message(message):
 
 			if ewcfg.mutation_id_chameleonskin not in mutations or cmd not in ewcfg.offline_cmds:
 
-				response = "You cannot participate in the ENDLESS WAR while offline."
+				response = "You cannot participate in the ENDLESS RIOT while offline."
     
 				return await fe_utils.send_message(client, message.channel, fe_utils.formatMessage(message.author, response))
 
@@ -1702,7 +1707,7 @@ async def on_message(message):
 		if user_data.time_lastoffline > time_now - ewcfg.time_offline:
 
 			if ewcfg.mutation_id_chameleonskin not in mutations or cmd not in ewcfg.offline_cmds:
-				response = "You are too paralyzed by ENDLESS WAR's judgemental stare to act."
+				response = "You are too paralyzed by ENDLESS RIOT's judgemental stare to act."
 
 				return await fe_utils.send_message(client, message.channel, fe_utils.formatMessage(message.author, response))
 
@@ -2127,11 +2132,11 @@ async def on_message(message):
 			""" couldn't process the command. bail out!! """
 			""" bot rule 0: be cute """
 			randint = random.randint(1,3)
-			msg_mistake = "ENDLESS WAR is growing frustrated."
+			msg_mistake = "ENDLESS RIOT is growing frustrated."
 			if randint == 2:
-				msg_mistake = "ENDLESS WAR denies you his favor."
+				msg_mistake = "ENDLESS RIOT denies you his favor."
 			elif randint == 3:
-				msg_mistake = "ENDLESS WAR pays you no mind."
+				msg_mistake = "ENDLESS RIOT pays you no mind."
 
 			msg = await fe_utils.send_message(client, cmd_obj.message.channel, msg_mistake, 2)
 			await asyncio.sleep(2)

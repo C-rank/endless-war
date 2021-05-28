@@ -40,7 +40,7 @@ async def revive(cmd):
 		time_until_revive = (player_data.time_lastdeath + player_data.degradation) - time_now
 		
 		if time_until_revive > 0:
-			response = "ENDLESS WAR is not ready to {} you yet ({}s).".format(cmd.tokens[0], time_until_revive)
+			response = "ENDLESS RIOT is not ready to {} you yet ({}s).".format(cmd.tokens[0], time_until_revive)
 			return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
 
 		slimeoid = EwSlimeoid(member = cmd.message.author)
@@ -48,7 +48,7 @@ async def revive(cmd):
 		if player_data.life_state == ewcfg.life_state_corpse:
 			market_data = EwMarket(id_server = cmd.guild.id)
 
-			# Endless War collects his fee.
+			# ENDLESS RIOT collects his fee.
 			#fee = (player_data.slimecoin / 10)
 			#player_data.change_slimecoin(n = -fee, coinsource = ewcfg.coinsource_revival)
 			#market_data.slimes_revivefee += fee
@@ -177,7 +177,7 @@ async def haunt(cmd):
 				response = "You can't commit violence from here."
 			elif target_poi.pvp == False:
 			#Require the target to be in a PvP area, and flagged if it's a remote haunt
-				response = "{} is not mired in the ENDLESS WAR right now.".format(member.display_name)
+				response = "{} is not mired in the ENDLESS RIOT right now.".format(member.display_name)
 			elif haunted_data.life_state == ewcfg.life_state_corpse:
 				# Dead players can't be haunted.
 				response = "{} is already dead.".format(member.display_name)
@@ -287,7 +287,7 @@ async def haunt(cmd):
 				resp_cont.add_channel_response(haunted_channel, haunt_message)
 		else:
 			# No mentions, or mentions we didn't understand.
-			response = "Your spookiness is appreciated, but ENDLESS WAR didn\'t understand that name."
+			response = "Your spookiness is appreciated, but ENDLESS RIOT didn\'t understand that name."
 
 	# Send the response to the player.
 	resp_cont.add_channel_response(cmd.message.channel.name, response)
@@ -457,7 +457,7 @@ async def inhabit(cmd):
 
 				response = "{}\'s body is inhabitted by the ghost of {}!".format(member.display_name, cmd.message.author.display_name)
 		else:
-			response = "Your spookiness is appreciated, but ENDLESS WAR didn\'t understand that name."
+			response = "Your spookiness is appreciated, but ENDLESS RIOT didn\'t understand that name."
 
 	return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
 

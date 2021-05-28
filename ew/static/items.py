@@ -382,7 +382,7 @@ item_list = [
 	EwGeneralItem(
 		id_item = ewcfg.item_id_faggot,
 		str_name = "faggot",
-		str_desc = "Wow, incredible! We’ve evolved from one dumb stick to several, all tied together for the sake of a retarded puesdo-pun! Truly, ENDLESS WAR has reached its peak. It’s all downhill from here, folks.",
+		str_desc = "Wow, incredible! We’ve evolved from one dumb stick to several, all tied together for the sake of a retarded puesdo-pun! Truly, ENDLESS RIOT has reached its peak. It’s all downhill from here, folks.",
 		acquisition = ewcfg.acquisition_smelting
 	),
 	EwGeneralItem(
@@ -472,8 +472,8 @@ item_list = [
 			"gameguide",
 			"gamergate",
 		],
-		str_name = "The official unofficial ENDLESS WAR Game Guide, Version III",
-		str_desc = "A guide on all the game mechanics found in ENDLESS WAR, accurate as of 7/19/2020. Use the !help command to crack it open.",
+		str_name = "The official unofficial ENDLESS RIOT Game Guide, Version III",
+		str_desc = "A guide on all the game mechanics found in ENDLESS RIOT, accurate as of 7/19/2020. Use the !help command to crack it open.",
 		vendors = [ewcfg.vendor_college],
 		price = 10000,
 	),
@@ -1214,7 +1214,7 @@ EwGeneralItem(
 		str_name="Free Ipad",
 		str_desc="A free iPad. On the back, there's a logo sticker for... Cinemassacre? Oh god, you better drop this thing before that cyborg puts you out of your misery." + ewcfg.prank_type_text_trap,
 		prank_type=ewcfg.prank_type_trap,
-		prank_desc='Well what do ya know! A free iPad! You bend over to pick it up...\n\nENDLESS WAR judges you harshly! He shoots out two shots of a non-lethal variant of the Bone-hurting-beam, which is even more embarrassing than if he had just killed you, honestly. He told you to shut up, but you didn\'t listen.\n\n**"OH LOOK, A FREE IPAD."**',
+		prank_desc='Well what do ya know! A free iPad! You bend over to pick it up...\n\nENDLESS RIOT judges you harshly! He shoots out two shots of a non-lethal variant of the Bone-hurting-beam, which is even more embarrassing than if he had just killed you, honestly. He told you to shut up, but you didn\'t listen.\n\n**"OH LOOK, A FREE IPAD."**',
 		trap_chance=35,
 		rarity=ewcfg.prank_rarity_forbidden,
 		gambit=45,
@@ -1295,7 +1295,7 @@ EwGeneralItem(
 		str_name="Free Ipad...?",
 		str_desc="A free iPad. On the back, there's a logo sticker for... Cinemassacre? Oh god, you better drop this thing before that android puts you out of your misery." + ewcfg.prank_type_text_trap,
 		prank_type=ewcfg.prank_type_trap,
-		prank_desc='Well what do ya know! A free iPad! You bend over to pick it up...\n\nENDLESS WAR judges you harshly! He shoots out two shots of a non-lethal variant of the Bone-hurting-beam, which is even more embarrassing than if he had just killed you, honestly. He told you to shut up, but you didn\'t listen.\n\n**"It always... ends like this..."**\n\n**"OH LOOK, A FREE IPAD."**',
+		prank_desc='Well what do ya know! A free iPad! You bend over to pick it up...\n\nENDLESS RIOT judges you harshly! He shoots out two shots of a non-lethal variant of the Bone-hurting-beam, which is even more embarrassing than if he had just killed you, honestly. He told you to shut up, but you didn\'t listen.\n\n**"It always... ends like this..."**\n\n**"OH LOOK, A FREE IPAD."**',
 		trap_chance=35,
 		rarity=ewcfg.prank_rarity_forbidden,
 		gambit=45,

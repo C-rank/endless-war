@@ -28,8 +28,3 @@ apt_dm_cmd_map = {
 if ewcfg.capping_style == "idle":
     cmd_map[ewcfg.cmd_spray] = districtcmds.tag,
     cmd_map[ewcfg.cmd_spray_alt1] = districtcmds.tag
-
-# Only enable these commands if the GvS event is active
-if ewcfg.gvs_active:
-    cmd_map[ewcfg.cmd_shamble] = districtcmds.shamble
-    cmd_map[ewcfg.cmd_rejuvenate] = districtcmds.rejuvenate

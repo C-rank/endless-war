@@ -39,9 +39,8 @@ def get_move_speed(user_data):
     if ewcfg.mutation_id_fastmetabolism in mutations and user_data.hunger / user_data.get_hunger_max() < 0.4:
         move_speed *= 1.33
 
-    # TODO remove after double halloween
-    # if user_data.life_state == ewcfg.life_state_corpse:
-    #	move_speed *= 2
+    if user_data.life_state == ewcfg.life_state_corpse and ewcfg.dh_active:
+    	move_speed *= 2
 
     move_speed = max(0.1, move_speed)
 

@@ -296,9 +296,10 @@ async def on_ready():
         asyncio.ensure_future(loop_utils.remove_status_loop(id_server=server.id))
         asyncio.ensure_future(loop_utils.event_tick_loop(id_server=server.id))
 
-        # SWILLDERMUK
-        # asyncio.ensure_future(ewutils.spawn_prank_items_tick_loop(id_server = server.id))
-        # asyncio.ensure_future(ewutils.generate_credence_tick_loop(id_server = server.id))
+        # Un-comment this if someone finds the swilldermuk code lol
+        #if ewcfg.swilldermuk_active:
+        #    asyncio.ensure_future(ewutils.spawn_prank_items_tick_loop(id_server = server.id))
+        #    asyncio.ensure_future(ewutils.generate_credence_tick_loop(id_server = server.id))
 
         if ewcfg.gvs_active:
             asyncio.ensure_future(loop_utils.gvs_gamestate_tick_loop(id_server=server.id))

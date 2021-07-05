@@ -36,6 +36,9 @@ slimernalia_active = False
 # Whether or not the slimefest event is active or not
 slimefest_active = False
 
+# Whether or not the swilldermuk event is active or not
+swilldermuk_active = False
+
 # The max amount of degradation a district can have before it is shambled completely
 district_max_degradation = 10000
 
@@ -5712,68 +5715,3 @@ cmd_debug6 = cmd_prefix + ewdebug.cmd_debug6
 cmd_debug7 = cmd_prefix + ewdebug.cmd_debug7
 cmd_debug8 = cmd_prefix + ewdebug.cmd_debug8
 cmd_debug9 = cmd_prefix + ewdebug.cmd_debug9
-"""    /*"rpcity": {
-        "id_poi": "rpcity",
-        "alias": [
-            "rp",
-            "rp city",
-            "roleplay city",
-            "rpc",
-            "costumestore",
-            "costume"
-        ],
-        "str_name": "RP City",
-        "str_desc": "This place gives you the fucking creeps. A run-down shell of its former self, the RP City store has been long forgotten by most of the residents of NLACakaNM, but every Double Halloween, it somehow comes crawling back. All the amenities and costumes are ragged and decrepit, but it seems there's still a fresh supply of costume creation kits. Oh yeah, the register is also manned by a ghost, because why wouldn't it be. He doesn't seem to mind you browsing though, you figure he's just here to collect a paycheck. Such is life... er... the afterlife, rather.",
-        "str_in": "in",
-        "str_enter": "enter",
-        "coord": null,
-        "coord_alias": [],
-        "channel": "rp-city",
-        "role": "RP City",
-        "major_role": "littlechernobyl_major",
-        "minor_role": "nullminorrole",
-        "permissions": {
-            "rpcity": [
-                "read",
-                "send",
-                "connect"
-            ]
-        },
-        "pvp": false,
-        "factions": [],
-        "life_states": [],
-        "closed": false,
-        "str_closed": null,
-        "vendors": [
-            "RP City"
-        ],
-        "property_class": "",
-        "is_district": false,
-        "is_gangbase": false,
-        "is_capturable": false,
-        "is_subzone": true,
-        "is_apartment": false,
-        "is_street": false,
-        "mother_districts": [
-            "littlechernobyl"
-        ],
-        "father_district": "",
-        "is_transport": false,
-        "transport_type": "",
-        "default_line": "",
-        "default_stop": "",
-        "is_transport_stop": false,
-        "is_outskirts": false,
-        "community_chest": null,
-        "is_pier": false,
-        "pier_type": null,
-        "is_tutorial": false,
-        "has_ads": false,
-        "write_manuscript": true,
-        "max_degradation": 10000,
-        "neighbors": {
-            "littlechernobyl": 20
-        },
-        "topic": "",
-        "wikipage": "https://rfck.miraheze.org/wiki/Little_Chernobyl#RP_City"
-    },*/"""

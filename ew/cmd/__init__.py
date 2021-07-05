@@ -1,3 +1,4 @@
+from ew.cmd import dh, slimernalia
 from . import ads
 from . import apt
 from . import book
@@ -14,6 +15,7 @@ from . import faction
 from . import farm
 from . import fish
 from . import food
+from . import gvs
 from . import hunting
 from . import item
 from . import juviecmd
@@ -25,6 +27,8 @@ from . import quadrants
 from . import race
 from . import slimeoid
 from . import slimetwitter
+from . import slimernalia
+from . import swilldermuk
 from . import smelting
 from . import spooky
 from . import sports
@@ -50,6 +54,7 @@ cmd_modules = [
     cosmeticitem,
     ewdebug,
     district,
+    dungeons,
     slimeoid,
     move,
     market,
@@ -102,6 +107,19 @@ cmd_map = {
 }
 dm_cmd_map = {}
 apt_dm_cmd_map = {}
+
+if ewcfg.slimernalia_active:
+    cmd_modules.append(slimernalia)
+
+if ewcfg.dh_active:
+    cmd_modules.append(dh)
+
+if ewcfg.swilldermuk_active:
+    cmd_modules.append(swilldermuk)
+
+if ewcfg.gvs_active:
+    cmd_modules.append(gvs)
+
 
 for mod in cmd_modules:
     try:

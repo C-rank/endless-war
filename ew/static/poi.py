@@ -1,5 +1,6 @@
 import json
 import os
+from re import M
 
 from . import cfg as ewcfg
 from ..model.poi import EwDungeonScene
@@ -174,7 +175,7 @@ poi_list = [
         property_class = "c",
         is_district = True,
         is_capturable = True,
-        neighbors = {'arsonbrook': 60, 'brawlden': 60, 'oldnewyonkers': 60, 'greencakecafe': 20},
+        neighbors = {'arsonbrook': 60, 'brawlden': 60, 'oldnewyonkers': 60, 'greencakecafe': 20, 'rpcity': 20},
         topic = "Home to the R&D headquarters of many a small business and international conglomerate alike. Don't drink the water.",
         wikipage = "https://rfck.miraheze.org/wiki/Little_Chernobyl",
     ),
@@ -4765,6 +4766,27 @@ poi_list = [
         is_subzone = True,
         neighbors = {'lobbybackroom': 20},
     ),
+    EwPoi(
+        id_poi = "rpcity",
+        alias = [
+            "rp", "rp city", "roleplay city", "rpc", "costumestore", "costume"
+        ],
+        str_name = "RP City",
+        str_desc = "This place gives you the fucking creeps. A run-down shell of its former self, the RP City store has been long forgotten by most of the residents of NLACakaNM, but every Double Halloween, it somehow comes crawling back. All the amenities and costumes are ragged and decrepit, but it seems there's still a fresh supply of costume creation kits. Oh yeah, the register is also manned by a ghost, because why wouldn't it be. He doesn't seem to mind you browsing though, you figure he's just here to collect a paycheck. Such is life... er... the afterlife, rather.",
+        channel = "rp-city",
+        major_role = "littlechernobyl_major",
+        minor_role = "nullminorrole",
+        permissions= {
+            'rp-city': ['read', 'send', 'connect']
+        },
+        pvp = False,
+        closed = True,
+        str_closed = "The RP City store is currently closed. They'll be open again next Double Halloween!",
+        vendors = ["Rp City"],
+        is_subzone = True,
+        neighbors = {"littlechernobyl": 20},
+        wikipage = "https://rfck.miraheze.org/wiki/Little_Chernobyl#RP_City"
+    ),
 ]
 
 
@@ -4981,6 +5003,9 @@ for poi in poi_list:
 
     if poi.is_tutorial:
         tutorial_pois.append(poi.id_poi)
+    
+    if poi.id_poi == "rpcity" and ewcfg.dh_active:
+        poi.closed = False
 
     if poi.write_manuscript:
         for mother_poi in poi.mother_districts:
@@ -5234,45 +5259,6 @@ transport_lines = [
         }
 
     ),
-    #	EwTransportLine( # white subway line from downtown to juvies row
-    #	 	id_line = ewcfg.transport_line_subway_white_eastbound,
-    #	 	alias = [
-    #	 		"whiteeastline",
-    #			"whiteeast",
-    #	 		"eastwhite",
-    #	 		"whitetojuviesrow",
-    #	 		"whitetojuvies",
-    #	 		"whitetojr"
-    #	 	    ],
-    #	 	first_stop = ewcfg.poi_id_underworld_subway_station,
-    #	 	last_stop = ewcfg.poi_id_jr_subway_station,
-    #	 	next_line = ewcfg.transport_line_subway_white_westbound,
-    #	 	str_name = "The white subway line towards Juvie's Row",
-    #	 	schedule = {
-    #	 		ewcfg.poi_id_underworld_subway_station : [ewcfg.time_movesubway, ewcfg.poi_id_dt_subway_station],
-    #	 		ewcfg.poi_id_dt_subway_station : [ewcfg.time_movesubway, ewcfg.poi_id_rr_subway_station],
-    #	 		ewcfg.poi_id_rr_subway_station : [ewcfg.time_movesubway, ewcfg.poi_id_jr_subway_station]
-    #	 	    }
-    #	 	),
-    #	EwTransportLine( # white subway line from juvies row to downtown
-    #	 	id_line = ewcfg.transport_line_subway_white_westbound,
-    #	 	alias = [
-    #	 		"whitewestline",
-    #	 		"whitewest",
-    #	 		"westwhite",
-    #	 		"whitetounderworld",
-    #	 		"whitetouw"
-    #	 	    ],
-    #	 	first_stop = ewcfg.poi_id_jr_subway_station,
-    #	 	last_stop = ewcfg.poi_id_underworld_subway_station,
-    #	 	next_line = ewcfg.transport_line_subway_white_eastbound,
-    #	 	str_name = "The white subway line towards The Underworld",
-    #	 	schedule = {
-    #	 		ewcfg.poi_id_jr_subway_station : [ewcfg.time_movesubway, ewcfg.poi_id_rr_subway_station],
-    #	 		ewcfg.poi_id_rr_subway_station : [ewcfg.time_movesubway, ewcfg.poi_id_dt_subway_station],
-    #	 		ewcfg.poi_id_dt_subway_station : [ewcfg.time_movesubway, ewcfg.poi_id_underworld_subway_station],
-    #	 	    }
-    #	 	),
     EwTransportLine(  # blimp line from dreadford to assault flats beach
         id_line=ewcfg.transport_line_blimp_df_to_afb,
         alias=[
@@ -5327,7 +5313,52 @@ transport_lines = [
     ),
 ]
 
+double_halloween_lines = [
+    	EwTransportLine( # white subway line from downtown to juvies row
+    	 	id_line = ewcfg.transport_line_subway_white_eastbound,
+    	 	alias = [
+    	 		"whiteeastline",
+    			"whiteeast",
+    	 		"eastwhite",
+    	 		"whitetojuviesrow",
+    	 		"whitetojuvies",
+    	 		"whitetojr"
+    	 	    ],
+    	 	first_stop = ewcfg.poi_id_underworld_subway_station,
+    	 	last_stop = ewcfg.poi_id_jr_subway_station,
+    	 	next_line = ewcfg.transport_line_subway_white_westbound,
+    	 	str_name = "The white subway line towards Juvie's Row",
+    	 	schedule = {
+    	 		ewcfg.poi_id_underworld_subway_station : [ewcfg.time_movesubway, ewcfg.poi_id_dt_subway_station],
+    	 		ewcfg.poi_id_dt_subway_station : [ewcfg.time_movesubway, ewcfg.poi_id_rr_subway_station],
+    	 		ewcfg.poi_id_rr_subway_station : [ewcfg.time_movesubway, ewcfg.poi_id_jr_subway_station]
+    	 	    }
+    	 	),
+    	EwTransportLine( # white subway line from juvies row to downtown
+    	 	id_line = ewcfg.transport_line_subway_white_westbound,
+    	 	alias = [
+    	 		"whitewestline",
+    	 		"whitewest",
+    	 		"westwhite",
+    	 		"whitetounderworld",
+    	 		"whitetouw"
+    	 	    ],
+    	 	first_stop = ewcfg.poi_id_jr_subway_station,
+    	 	last_stop = ewcfg.poi_id_underworld_subway_station,
+    	 	next_line = ewcfg.transport_line_subway_white_eastbound,
+    	 	str_name = "The white subway line towards The Underworld",
+    	 	schedule = {
+    	 		ewcfg.poi_id_jr_subway_station : [ewcfg.time_movesubway, ewcfg.poi_id_rr_subway_station],
+    	 		ewcfg.poi_id_rr_subway_station : [ewcfg.time_movesubway, ewcfg.poi_id_dt_subway_station],
+    	 		ewcfg.poi_id_dt_subway_station : [ewcfg.time_movesubway, ewcfg.poi_id_underworld_subway_station],
+    	 	    }
+    	 	)
+]
+
 id_to_transport_line = {}
+
+if ewcfg.dh_active:
+    transport_lines.extend(double_halloween_lines)
 
 
 #loop throught transport lines list

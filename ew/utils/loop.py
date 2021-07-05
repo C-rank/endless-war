@@ -1129,6 +1129,10 @@ async def capture_tick(id_server):
                 player_id = player
                 user_data = EwUser(id_user=player_id, id_server=id_server)
                 player_faction = user_data.faction
+                weapon_item = None
+                sidearm_item = None
+                weapon = None
+                sidearm = None
 
                 mutations = user_data.get_mutations()
                 if user_data.weapon != -1:
@@ -1136,9 +1140,10 @@ async def capture_tick(id_server):
 
                 if user_data.sidearm != -1:
                     sidearm_item = EwItem(id_item=user_data.sidearm)
-
-                weapon = static_weapons.weapon_map.get(weapon_item.item_props.get("weapon_type"))
-                sidearm = static_weapons.weapon_map.get(sidearm_item.item_props.get("weapon_type"))
+                if weapon_item is not None:
+                    weapon = static_weapons.weapon_map.get(weapon_item.item_props.get("weapon_type"))
+                if weapon_item is not None:
+                    sidearm = static_weapons.weapon_map.get(sidearm_item.item_props.get("weapon_type"))
 
                 try:
                     player_online = server.get_member(player_id).status != discord.Status.offline

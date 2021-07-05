@@ -57,9 +57,6 @@ cmd_map = {
     cfg.cmd_dodge_alt1: wepcmds.dodge,
     cfg.cmd_dodge_alt2: wepcmds.dodge,
 
-    # !sanitize
-    cfg.cmd_sanitize: wepcmds.sanitize,
-
     # !switch
     cfg.cmd_switch: wepcmds.switch_weapon,
     cfg.cmd_switch_alt_1: wepcmds.switch_weapon,
@@ -93,6 +90,7 @@ if cfg.capping_style == "active":
     # !spray commands
     cmd_map[cfg.cmd_spray] = wepcmds.spray,
     cmd_map[cfg.cmd_spray_alt1] = wepcmds.spray
+    cmd_map[cfg.cmd_sanitize] = wepcmds.sanitize
 
 if cfg.slimefest_active:
     cmd_map[cfg.cmd_win] = wepcmds.attack

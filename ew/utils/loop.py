@@ -25,6 +25,7 @@ from ..backend.player import EwPlayer
 from ..backend.status import EwEnemyStatusEffect
 from ..backend.status import EwStatusEffect
 from ..backend.worldevent import EwWorldEvent
+from ..backend.item import EwItem
 from ..static import cfg as ewcfg
 from ..static import items as static_items
 from ..static import poi as poi_static
@@ -1100,9 +1101,6 @@ async def capture_tick(id_server):
             if dist.time_unlock > 0:
                 continue
 
-            # no more automatic capping
-            continue
-
             controlling_faction = dist.controlling_faction
 
             gangsters_in_district = dist.get_players_in_district(min_slimes=ewcfg.min_slime_to_cap, life_states=[ewcfg.life_state_enlisted], ignore_offline=True)
@@ -1133,6 +1131,14 @@ async def capture_tick(id_server):
                 player_faction = user_data.faction
 
                 mutations = user_data.get_mutations()
+                if user_data.weapon != -1:
+                    weapon_item = EwItem(id_item=user_data.weapon)
+
+                if user_data.sidearm != -1:
+                    sidearm_item = EwItem(id_item=user_data.sidearm)
+
+                weapon = static_weapons.weapon_map.get(weapon_item.item_props.get("weapon_type"))
+                sidearm = static_weapons.weapon_map.get(sidearm_item.item_props.get("weapon_type"))
 
                 try:
                     player_online = server.get_member(player_id).status != discord.Status.offline
@@ -1151,12 +1157,22 @@ async def capture_tick(id_server):
                     else:  # if the district isn't already controlled by the player's faction and the capture isn't halted by an enemy
                         faction_capture = player_faction
                         player_capture_speed = 1
-                        if ewcfg.mutation_id_lonewolf in mutations and len(gangsters_in_district) == 1:
-                            player_capture_speed *= 2
-                        if ewcfg.mutation_id_patriot in mutations:
-                            player_capture_speed *= 2
+                        player_capture_bonus = 1
 
-                        capture_speed += player_capture_speed
+                        # Tool/Weapon Handling
+                        if weapon is not None and ewcfg.weapon_class_paint in weapon.classes:
+                            player_capture_speed *= 2
+                        # If the player has ambi, they get half the buff even when their paint tool is sidearmed
+                        elif sidearm is not None and ewcfg.weapon_class_paint in sidearm.classes and ewcfg.mutation_id_ambidextrous in mutations:
+                            player_capture_speed *= 1.5
+                        
+                        # Mutation Handling
+                        if ewcfg.mutation_id_lonewolf in mutations and len(gangsters_in_district) == 1:
+                            player_capture_bonus += 2
+                        if ewcfg.mutation_id_patriot in mutations:
+                            player_capture_bonus += 2
+
+                        capture_speed += (player_capture_speed * player_capture_bonus)
                         num_capturers += 1
                         dc_stat_increase_list.append(player_id)
 
@@ -1202,9 +1218,7 @@ async def capture_tick(id_server):
                         resp_cont_capture_tick.add_response_container(responses)
 
                     dist.persist()
-
-
-# await resp_cont_capture_tick.post()
+    await resp_cont_capture_tick.post()
 
 
 """

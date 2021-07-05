@@ -50,11 +50,7 @@ async def move(cmd = None, isApt = False):
 
     if isApt == False and ewutils.channel_name_is_poi(cmd.message.channel.name) == False:
         channelid = fe_utils.get_channel(cmd.guild, poi_current.channel)
-        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author,
-                                                                                                   "You must {} in a zone's channel.\n{}".format(
-                                                                                                       cmd.tokens[0],
-                                                                                                       "<#{}>".format(
-                                                                                                           channelid.id))))
+        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, "You must {} in a zone's channel.\n{}".format(cmd.tokens[0], "<#{}>".format(channelid.id))))
 
     target_name = ewutils.flattenTokenListToString(cmd.tokens[1:])
     if target_name == None or len(target_name) == 0:
@@ -62,8 +58,7 @@ async def move(cmd = None, isApt = False):
                                            fe_utils.formatMessage(cmd.message.author, "Where to?"))
 
     if target_name in poi_static.streets:
-        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author,
-                                                                                                   "https://www.goodreads.com/quotes/106313-the-beginning-of-wisdom-is-to-call-things-by-their ...bitch"))
+        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, "https://www.goodreads.com/quotes/106313-the-beginning-of-wisdom-is-to-call-things-by-their ...bitch"))
 
     poi = poi_static.id_to_poi.get(target_name)
     if poi_current.is_apartment == True:
@@ -89,16 +84,13 @@ async def move(cmd = None, isApt = False):
     if ewutils.active_restrictions.get(user_data.id_user) != None and ewutils.active_restrictions.get(
             user_data.id_user) > 0:
         response = "You can't do that right now."
-        return await fe_utils.send_message(cmd.client, cmd.message.channel,
-                                           fe_utils.formatMessage(cmd.message.author, response))
+        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, response))
 
     if poi == None:
-        return await fe_utils.send_message(cmd.client, cmd.message.channel,
-                                           fe_utils.formatMessage(cmd.message.author, "Never heard of it."))
+        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, "Never heard of it."))
 
     if not ewutils.DEBUG and not isApt and poi_static.chname_to_poi.get(cmd.message.channel.name).id_poi != user_data.poi:
-        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author,
-                                                                                                   "You must {} in your current district.").format(
+        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, "You must {} in your current district.").format(
             cmd.tokens[0]))
 
     if user_data.poi == ewcfg.debugroom:
@@ -113,12 +105,9 @@ async def move(cmd = None, isApt = False):
 
     if user_data.poi == ewcfg.debugroom and cmd.tokens[0] != (
             ewcfg.cmd_descend) and poi.id_poi != ewcfg.poi_id_slimeoidlab:
-        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author,
-                                                                                                   "You can't move forwards or backwards in an {}, bitch.".format(
-                                                                                                       ewcfg.debugroom_short)))
+        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, "You can't move forwards or backwards in an {}, bitch.".format(ewcfg.debugroom_short)))
     elif user_data.poi != ewcfg.debugroom and cmd.tokens[0] == (ewcfg.cmd_descend):
-        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author,
-                                                                                                   "You can't move downwards on a solid surface, bitch."))
+        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, "You can't move downwards on a solid surface, bitch."))
 
     # if fetch_poi_if_coordless(poi.channel) is not None: # Triggers if your destination is a sub-zone.
     # 	poi = fetch_poi_if_coordless(poi.channel)
@@ -128,8 +117,7 @@ async def move(cmd = None, isApt = False):
     # 		poi = mother_poi
 
     if poi.id_poi == user_data.poi:
-        return await fe_utils.send_message(cmd.client, cmd.message.channel,
-                                           fe_utils.formatMessage(cmd.message.author, "You're already there, bitch."))
+        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, "You're already there, bitch."))
     elif isApt and poi.id_poi == user_data.poi[3:]:
         return await ewapt.aptcmds.depart(cmd=cmd)
     flamestate = EwGamestate(id_server=user_data.id_server, id_state='flamethrower')
@@ -137,12 +125,10 @@ async def move(cmd = None, isApt = False):
         return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, "You open the elevator, and are immediately met with fire spitting out of the elevator. Over the crackling flames you can hear a woman screaming \"AAAAAAAAGH FUCK YOU DIE DIE DIE DIE!!!!!\". You're guessing entering now is a bad idea."))
 
     if move_utils.inaccessible(user_data=user_data, poi=poi):
-        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author,
-                                                                                                   "You're not allowed to go there (bitch)."))
+        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, "You're not allowed to go there (bitch)."))
 
     if user_data.life_state == ewcfg.life_state_corpse and time.time() - user_data.time_lastdeath < ewcfg.time_to_manifest:
-        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author,
-                                                                                                   "You're not used to being dead yet, it takes a while to learn how to manifest your ghost and move around."))
+        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, "You're not used to being dead yet, it takes a while to learn how to manifest your ghost and move around."))
     if isApt:
         poi_current = poi_static.id_to_poi.get(user_data.poi[3:])
 
@@ -162,8 +148,7 @@ async def move(cmd = None, isApt = False):
             path.cost = int(path.cost / user_data.move_speed)
 
     if path == None:
-        return await fe_utils.send_message(cmd.client, cmd.message.channel,
-                                           fe_utils.formatMessage(cmd.message.author, "You don't know how to get there."))
+        return await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, "You don't know how to get there."))
     if isApt or intoApt:
         path.cost += 20
     # global move_counter
@@ -198,9 +183,7 @@ async def move(cmd = None, isApt = False):
         aptText = ""
 
     if movement_method == "descending":
-        msg_walk_start = await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author,
-                                                                                                             "You press the button labeled {}. You will arrive in {} seconds.".format(
-                                                                                                                 poi.str_name, seconds)))
+        msg_walk_start = await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, "You press the button labeled {}. You will arrive in {} seconds.".format(poi.str_name, seconds)))
     else:
         distance_text = (" It's {} minute{}{} away.".format(
             minutes,
@@ -218,8 +201,7 @@ async def move(cmd = None, isApt = False):
                     poi.str_name, distance_text, ewcfg.cmd_halt_alt1)
         else:
             walk_response = "You begin {} to {}{}.{}".format(walk_text, poi.str_name, aptText, distance_text)
-        msg_walk_start = await fe_utils.send_message(cmd.client, cmd.message.channel,
-                                                     fe_utils.formatMessage(cmd.message.author, walk_response))
+        msg_walk_start = await fe_utils.send_message(cmd.client, cmd.message.channel, fe_utils.formatMessage(cmd.message.author, walk_response))
         if isApt:
             await ewapt.aptcmds.depart(cmd=cmd, isGoto=True, movecurrent=move_current)
 
@@ -294,12 +276,20 @@ async def move(cmd = None, isApt = False):
             user_data = EwUser(id_user=cmd.message.author.id, id_server=player_data.id_server, data_level=1)
             # mutations = user_data.get_mutations()
             if poi_current != None:
+                channel = cmd.message.channel
+                
+                # If the player somehow got past the last one, prevent access to the zone if it's closed.
+                if poi_current.closed == True:
+                    try:
+                        if poi_current.str_closed != None:
+                            message_closed = poi_current.str_closed
+                        else:
+                            message_closed = "The way into {} is blocked.".format(poi_current.str_name)
+                    finally:
+                        return await fe_utils.send_message(cmd.client, channel, fe_utils.formatMessage(cmd.message.author, message_closed))
 
                 if len(user_data.faction) > 0 and user_data.poi in poi_static.capturable_districts:
-                    district = EwDistrict(
-                        id_server=user_data.id_server,
-                        district=user_data.poi
-                    )
+                    district = EwDistrict(id_server=user_data.id_server, district=user_data.poi)
 
                     if district != None and len(district.controlling_faction) > 0 and i < (len(path.steps) - 1):
                         if user_data.faction == district.controlling_faction:
@@ -326,29 +316,13 @@ async def move(cmd = None, isApt = False):
 
                     return
 
-                channel = cmd.message.channel
+                
 
                 # Send the message in the channel for this POI if possible, else in the origin channel for the move.
                 for ch in server_data.channels:
                     if ch.name == poi_current.channel:
                         channel = ch
                         break
-
-                # Prevent access to the zone if it's closed.
-                if poi_current.closed == True:
-                    try:
-                        if poi_current.str_closed != None:
-                            message_closed = poi_current.str_closed
-                        else:
-                            message_closed = "The way into {} is blocked.".format(poi_current.str_name)
-                    finally:
-                        return await fe_utils.send_message(cmd.client,
-                                                           channel,
-                                                           fe_utils.formatMessage(
-                                                               cmd.message.author,
-                                                               message_closed
-                                                           )
-                                                           )
 
                 if user_data.poi != poi_current.id_poi:
                     if walking_into_sewers and poi_current.id_poi == ewcfg.poi_id_thesewers:
@@ -395,8 +369,7 @@ async def move(cmd = None, isApt = False):
                             id_ad = random.choice(ads)
                             ad_data = EwAd(id_ad=id_ad)
                             ad_response = format_ad_response(ad_data)
-                            await fe_utils.send_message(cmd.client, channel,
-                                                        fe_utils.formatMessage(cmd.message.author, ad_response))
+                            await fe_utils.send_message(cmd.client, channel, fe_utils.formatMessage(cmd.message.author, ad_response))
 
         if intoApt and ewutils.moves_active[cmd.message.author.id] == move_current:
             await ewapt.aptcmds.retire(cmd=cmd, isGoto=True, movecurrent=move_current)

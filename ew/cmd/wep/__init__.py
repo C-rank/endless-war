@@ -16,8 +16,6 @@ cmd_map = {
     cfg.cmd_shoot_alt8: wepcmds.attack,
     cfg.cmd_attack: wepcmds.attack,
     cfg.cmd_win: wepcmds.attack,
-    # Slimefest
-    # ewcfg.cmd_win: ewwep.attack,
 
     # !reload
     cfg.cmd_reload: wepcmds.reload,
@@ -59,10 +57,6 @@ cmd_map = {
     cfg.cmd_dodge_alt1: wepcmds.dodge,
     cfg.cmd_dodge_alt2: wepcmds.dodge,
 
-    # !spray
-    cfg.cmd_spray: wepcmds.spray,
-    cfg.cmd_spray_alt1: wepcmds.spray,
-
     # !sanitize
     cfg.cmd_sanitize: wepcmds.sanitize,
 
@@ -94,3 +88,11 @@ apt_dm_cmd_map = {
     cfg.cmd_sidearm: wepcmds.sidearm,
 
 }
+
+if cfg.capping_style == "active":
+    # !spray commands
+    cmd_map[cfg.cmd_spray] = wepcmds.spray,
+    cmd_map[cfg.cmd_spray_alt1] = wepcmds.spray
+
+if cfg.slimefest_active:
+    cmd_map[cfg.cmd_win] = wepcmds.attack

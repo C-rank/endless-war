@@ -18,11 +18,23 @@ update_market = 900  # 15 min
 # Number of times the bot should try a permissions-related API call. This is done purely for safety measures.
 permissions_tries = 1
 
+# What style of capping to use - "active" is season 3, "idle" is season 2
+capping_style = "idle"
+
 # Time saved moving through friendly territory (or lost in hostile territory).
 territory_time_gain = 10
 
 # A variable which is used to determine how certain functions of enemies are to perform
 gvs_active = False
+
+# Whether or not the double halloween event is active or not
+dh_active = False
+
+# Whether or not the slimernalia event is active or not
+slimernalia_active = False
+
+# Whether or not the slimefest event is active or not
+slimefest_active = False
 
 # The max amount of degradation a district can have before it is shambled completely
 district_max_degradation = 10000

@@ -31,9 +31,6 @@ cmd_map = {
     # Ghosts can BOO
     ewcfg.cmd_boo: cmdcmds.boo,
 
-    # TODO remove after double halloween
-    # ewcfg.cmd_spook: cmds.spook,
-
     # Juvies can dance
     ewcfg.cmd_dance: cmdcmds.dance,
     ewcfg.cmd_dance_alt: cmdcmds.dance,
@@ -152,46 +149,14 @@ cmd_map = {
     # Praying at the base of ENDLESS WAR.
     ewcfg.cmd_pray: cmdcmds.pray,
 
-    # Slimernalia -- Moved unwrap to item cmds. Please move wrap upon reimplementation
-    # Check your current festivity
-    # ewcfg.cmd_festivity: cmds.festivity,
-    # Wrap a gift -- ewitem maybe?
-    # ewcfg.cmd_wrap: cmds.wrap,
-    # Yo, Slimernalia
-    # ewcfg.cmd_yoslimernalia: cmds.yoslimernalia,
+    # Slimernalia -- please see bottom of file for commands
 
-    # Swilldermuk -- Please make swilldermuk specific cmd/util files on reimplementation
-    # ewcfg.cmd_gambit: cmds.gambit,
-    # ewcfg.cmd_credence: cmds.credence, #debug
-    # ewcfg.cmd_get_credence: cmds.get_credence, #debug
-    # ewcfg.cmd_reset_prank_stats: cmds.reset_prank_stats, #debug
-    # ewcfg.cmd_set_gambit: cmds.set_gambit, #debug
-    # ewcfg.cmd_pointandlaugh: cmds.point_and_laugh,
+    # Swilldermuk -- please see bottom of file for other commands
     ewcfg.cmd_prank: cmdcmds.prank,
 
-    # Gankers Vs. Shamblers -- Please make GvS specific cmd/util files on reimplementation
-    # Maybe shoulda had its own file
-    # ewcfg.cmd_gvs_printgrid: cmds.gvs_print_grid,
-    # ewcfg.cmd_gvs_printgrid_alt1: cmds.gvs_print_grid,
-    # ewcfg.cmd_gvs_printlane: cmds.gvs_print_lane,
-    # ewcfg.cmd_gvs_incubategaiaslimeoid: cmds.gvs_incubate_gaiaslimeoid,
-    # ewcfg.cmd_gvs_fabricatetombstone: cmds.gvs_fabricate_tombstone,
-    # ewcfg.cmd_gvs_joinoperation: cmds.gvs_join_operation,
-    # ewcfg.cmd_gvs_leaveoperation: cmds.gvs_leave_operation,
-    # ewcfg.cmd_gvs_checkoperation: cmds.gvs_check_operations,
-    # ewcfg.cmd_gvs_plantgaiaslimeoid: cmds.gvs_plant_gaiaslimeoid,
+    # Gankers Vs. Shamblers -- please see bottom of file for other commands
     ewcfg.cmd_gvs_almanac: cmdcmds.almanac,
-    # ewcfg.cmd_gvs_searchforbrainz: cmds.gvs_searchforbrainz,
-    # ewcfg.cmd_gvs_grabbrainz: cmds.gvs_grabbrainz,
-    # ewcfg.cmd_gvs_dive: cmds.gvs_dive,
-    # ewcfg.cmd_gvs_resurface: cmds.gvs_resurface,
-    # ewcfg.cmd_gvs_sellgaiaslimeoid: cmds.gvs_sell_gaiaslimeoid,
-    # ewcfg.cmd_gvs_sellgaiaslimeoid_alt: cmds.gvs_sell_gaiaslimeoid,
-    # ewcfg.cmd_gvs_dig: cmds.dig,
-    # ewcfg.cmd_gvs_progress: cmds.gvs_progress,
-    # ewcfg.cmd_gvs_gaiaslime: cmds.gvs_gaiaslime,
-    # ewcfg.cmd_gvs_gaiaslime_alt1: cmds.gvs_gaiaslime,
-    # ewcfg.cmd_gvs_brainz: cmds.gvs_brainz,
+    
 
     # Check your weapon masteries
     ewcfg.cmd_mastery: cmdcmds.check_mastery,
@@ -221,10 +186,7 @@ dm_cmd_map = {
     # !commands
     ewcfg.cmd_commands_alt1: cmdcmds.commands,
     ewcfg.cmd_commands: cmdcmds.commands,
-
-    # For GVS
-    # ewcfg.cmd_gvs_grabbrainz: cmds.gvs_grabbrainz,
-
+    
 }
 
 apt_dm_cmd_map = {
@@ -289,3 +251,65 @@ apt_dm_cmd_map = {
     ewcfg.cmd_slimecoin_alt3: cmdcmds.slimecoin,
 
 }
+
+dh_cmd_map = {
+    ewcfg.cmd_spook: cmdcmds.spook
+}
+
+slimernalia_cmd_map = {
+    # Check your current festivity
+    ewcfg.cmd_festivity: cmdcmds.festivity,
+    # Wrap a gift -- ewitem maybe?
+    ewcfg.cmd_wrap: cmdcmds.wrap,
+    # Yo, Slimernalia
+    ewcfg.cmd_yoslimernalia: cmdcmds.yoslimernalia,
+}
+
+swilldermuk_cmd_map = {
+    ewcfg.cmd_gambit: cmdcmds.gambit,
+    ewcfg.cmd_credence: cmdcmds.credence, #debug
+    ewcfg.cmd_get_credence: cmdcmds.get_credence, #debug
+    ewcfg.cmd_reset_prank_stats: cmdcmds.reset_prank_stats, #debug
+    ewcfg.cmd_set_gambit: cmdcmds.set_gambit, #debug
+    ewcfg.cmd_pointandlaugh: cmdcmds.point_and_laugh,
+}
+
+gvs_command_map = {
+    ewcfg.cmd_gvs_printgrid: cmdcmds.gvs_print_grid,
+    ewcfg.cmd_gvs_printgrid_alt1: cmdcmds.gvs_print_grid,
+    ewcfg.cmd_gvs_printlane: cmdcmds.gvs_print_lane,
+    ewcfg.cmd_gvs_incubategaiaslimeoid: cmdcmds.gvs_incubate_gaiaslimeoid,
+    ewcfg.cmd_gvs_fabricatetombstone: cmdcmds.gvs_fabricate_tombstone,
+    ewcfg.cmd_gvs_joinoperation: cmdcmds.gvs_join_operation,
+    ewcfg.cmd_gvs_leaveoperation: cmdcmds.gvs_leave_operation,
+    ewcfg.cmd_gvs_checkoperation: cmdcmds.gvs_check_operations,
+    ewcfg.cmd_gvs_plantgaiaslimeoid: cmdcmds.gvs_plant_gaiaslimeoid,
+    ewcfg.cmd_gvs_searchforbrainz: cmdcmds.gvs_searchforbrainz,
+    ewcfg.cmd_gvs_grabbrainz: cmdcmds.gvs_grabbrainz,
+    ewcfg.cmd_gvs_dive: cmdcmds.gvs_dive,
+    ewcfg.cmd_gvs_resurface: cmdcmds.gvs_resurface,
+    ewcfg.cmd_gvs_sellgaiaslimeoid: cmdcmds.gvs_sell_gaiaslimeoid,
+    ewcfg.cmd_gvs_sellgaiaslimeoid_alt: cmdcmds.gvs_sell_gaiaslimeoid,
+    ewcfg.cmd_gvs_dig: cmdcmds.dig,
+    ewcfg.cmd_gvs_progress: cmdcmds.gvs_progress,
+    ewcfg.cmd_gvs_gaiaslime: cmdcmds.gvs_gaiaslime,
+    ewcfg.cmd_gvs_gaiaslime_alt1: cmdcmds.gvs_gaiaslime,
+    ewcfg.cmd_gvs_brainz: cmdcmds.gvs_brainz,
+}
+
+gvs_dm_command_map = {
+    ewcfg.cmd_gvs_grabbrainz: cmdcmds.gvs_grabbrainz,
+}
+
+if ewcfg.dh_active:
+    cmd_map.extend(dh_cmd_map)
+
+if ewcfg.slimernalia_active:
+    cmd_map.extend(slimernalia_cmd_map)
+
+if ewcfg.swilldermuk_active:
+    cmd_map.extend(swilldermuk_cmd_map)
+
+if ewcfg.gvs_active:
+    cmd_map.extend(gvs_command_map)
+    dm_cmd_map.extend(gvs_dm_command_map)

@@ -1532,7 +1532,7 @@ async def dodge(cmd):
 
 """ Attack the control of a district, or buff your team's control """
 
-
+# Deprecated
 async def spray(cmd):
     roomba_loop = 0
     while True:
@@ -1795,7 +1795,7 @@ async def spray(cmd):
 
 """ Attack control of a district, slimecorp only """
 
-
+# Deprecated
 async def sanitize(cmd):
     roomba_loop = 0
     while 1:

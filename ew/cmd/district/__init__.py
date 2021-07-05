@@ -14,10 +14,6 @@ cmd_map = {
     ewcfg.cmd_changespray: districtcmds.change_spray,
     ewcfg.cmd_tag: districtcmds.tag,
 
-    # Gankers Vs. Shamblers gang swapping
-    # ewcfg.cmd_shamble: cmds.shamble,
-    # ewcfg.cmd_rejuvenate: cmds.rejuvenate,
-
 }
 
 apt_dm_cmd_map = {
@@ -27,3 +23,13 @@ apt_dm_cmd_map = {
     ewcfg.cmd_tag: districtcmds.tag,
 
 }
+
+# If we're using idle capping, spray becomes a tag alt
+if ewcfg.capping_style == "idle":
+    cmd_map[ewcfg.cmd_spray] = districtcmds.tag,
+    cmd_map[ewcfg.cmd_spray_alt1] = districtcmds.tag
+
+# Only enable these commands if the GvS event is active
+if ewcfg.gvs_active:
+    cmd_map[ewcfg.cmd_shamble] = districtcmds.shamble
+    cmd_map[ewcfg.cmd_rejuvenate] = districtcmds.rejuvenate
